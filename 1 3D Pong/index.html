@@ -1,0 +1,455 @@
+<!--
+	Kenia Castro
+	CAP 4720 Computer Graphics
+	Fall 2017
+	HW #1 - 3D Pong
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script src="libs/three.js"></script>
+	<script src="libs/keyboard.js"></script>
+	<script src='fonts/helvetiker.js'></script>
+
+	<style>
+		#info {
+			position: absolute;
+			top: 65%;
+			left: 37px;
+			width: 100%;
+			text-align: left;
+			z-index: 100;
+			display:block;
+			color: white;
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 22px;
+		}
+	
+	</style>
+</head>
+
+<body>
+
+<!-- <div id="info">How to Play:</div> -->
+<h1 id="info">How to Play: </h1>
+<p id="info"><br><br>Use the A-key to move the paddle <br>left and the D-key to move the <br>paddle right.</p>
+
+<script>
+	var renderer;
+	var scene;
+	var camera;
+	var spotLight;
+	
+	function init()
+	{
+		// To create a scene need a scene, camera, renderer
+		scene = new THREE.Scene();
+
+		camera = new THREE.PerspectiveCamera(    	     
+			45,                          				// frustum vertical field of view
+			window.innerWidth / window.innerHeight,		// aspect ratio. width divided by height
+			0.1,                   						// frustum near plane
+			1000 ); 									// frustum far plane
+														// items further from camera than value of far or closer than near won't be rendered
+		
+		renderer = new THREE.WebGLRenderer();
+		//						color     alpha
+		renderer.setClearColor( 0x000000, 1.0 );
+		renderer.setSize( window.innerWidth, window.innerHeight );	// use width & height or area want to fill (in this case browser window)
+		
+		renderer.shadowMapEnabled = true;				// Use shadow maps in the scene
+
+		camera.position.x = 0;
+		camera.position.y = 0;
+		camera.position.z = 31.5;
+		camera.lookAt(scene.position);
+
+		loadSounds();
+		createPlayBottom();
+		createBoundingWalls();
+		createPaddles();
+		createBall();
+		addSpotLight();
+		score();
+		instruction();
+		
+		// Output to the stream
+		document.body.appendChild( renderer.domElement );
+		
+		// Call render
+		render();
+	}
+	
+	function render()
+	{
+		moveBallAndMaintainPaddles();
+		
+		// Request animation frame
+		requestAnimationFrame( render );
+		
+		// Call render()
+		renderer.render( scene, camera );
+	}
+	
+	function addSpotLight()
+	{
+		spotLight = new THREE.SpotLight( 0xffffff );
+		spotLight.position.set( 10, 20, 20 );
+        spotLight.shadowCameraNear = 20;
+        spotLight.shadowCameraFar = 50;
+        spotLight.castShadow = true;
+        scene.add(spotLight);
+	}
+	
+	// Create the ground/field of play
+	function createPlayBottom()
+	{
+		// PlaneGeometry(width along x, height along y, optional-widthSegments, optional-heightSegments)
+		var planeGeometry = new THREE.PlaneGeometry( 16, 20, 5, 10 ); 
+		var planeMaterial = new THREE.MeshLambertMaterial({color:0x0a7cc1});
+		var plane = new THREE.Mesh( planeGeometry, planeMaterial );
+		scene.add(plane);
+
+		// Creates line dividing field
+		var lineGeometry = new THREE.PlaneGeometry(16, 0.75, 5, 10);
+		var lineMaterial = new THREE.MeshLambertMaterial({ color: 0xFFFFFF });
+		var line = new THREE.Mesh(lineGeometry, lineMaterial);
+		line.position.z = .01;
+		scene.add(line);
+	}
+	
+	// Create the walls around the field
+	function createBoundingWalls()
+	{
+		// Color of walls 15b40f   0ac1ab
+		var wallMaterial = new THREE.MeshNormalMaterial({ color: 0x00FFF9 });
+
+		// Left Wall
+		var leftWall = new THREE.BoxGeometry( 2, 22, 2, 5, 10, 10 );		// BoxGeometry(width X, height Y, depth Z)
+		var wall1 = new THREE.Mesh( leftWall, wallMaterial );				// parameters are geometry and material (leftWall and wall1/wall2)
+		wall1.position.x = -9;
+		wall1.position.z = 1;
+		scene.add( wall1 );
+		
+		var edges1 = new THREE.EdgesHelper( wall1, 0xf0ff00 );
+		scene.add( edges1 );
+	
+		// Right Wall
+		var rightWall = new THREE.BoxGeometry( 2, 22, 2, 10, 10, 10 );
+		var wall2 = new THREE.Mesh( rightWall, wallMaterial );
+		wall2.position.x = 9;
+		wall2.position.z = 1;
+		scene.add( wall2 );
+
+		var edges2 = new THREE.EdgesHelper( wall2, 0xf0ff00 );
+		scene.add( edges2 );
+
+		// Top Wall
+		var topWall = new THREE.BoxGeometry(16, 1, 2, 10, 10, 10);			
+		var wall3 = new THREE.Mesh(topWall, wallMaterial);	
+		wall3.position.y = 10.5;
+		wall3.position.z = 1;	
+		scene.add(wall3);
+
+		var edges3 = new THREE.EdgesHelper(wall3, 0xf0ff00);
+		scene.add(edges3);
+
+		// Bottom Wall
+		var bottomWall = new THREE.BoxGeometry(16, 1, 2, 10, 10, 10);			
+		var wall4 = new THREE.Mesh(bottomWall, wallMaterial);		
+		wall4.position.y = -10.5;
+		wall4.position.z = 1;
+		scene.add(wall4);
+
+		var edges4 = new THREE.EdgesHelper(wall4, 0xf0ff00);
+		scene.add(edges4);
+	}
+	
+	// Create the paddles
+	var paddle1, paddle2;	// 1: opponent 2:player
+	function createPaddles()
+	{
+		// Paddle color
+		var paddleMaterial = new THREE.MeshLambertMaterial({ color: 0xFFFF00 });
+
+		// Opponent paddle
+		var opponentPaddle = new THREE.BoxGeometry( 3, .5, 3 );
+		paddle1 = new THREE.Mesh( opponentPaddle, paddleMaterial );
+		paddle1.position.y = 9;
+		scene.add( paddle1 );
+			
+		var edges1 = new THREE.EdgesHelper( paddle1, 0x000000 );
+		scene.add( edges1 );
+			
+		// Player paddle
+		var playerPaddle = new THREE.BoxGeometry( 3, .5, 3 );
+		paddle2 = new THREE.Mesh( playerPaddle, paddleMaterial );
+		paddle2.position.y = -9;
+		scene.add( paddle2 );
+			
+		var edges2 = new THREE.EdgesHelper( paddle2, 0x000000 );
+		scene.add( edges2 );
+	}
+	
+	var ball;
+	var ballMaterial;
+	function createBall()
+	{
+		var ballSphere = new THREE.SphereGeometry( .6, 8 ,6 );
+		ballMaterial = new THREE.MeshLambertMaterial({color:0xaaff77});
+		ball = new THREE.Mesh( ballSphere, ballMaterial );
+		scene.add( ball );
+	}
+
+	var ballSpeed = 0.19;
+	var xDir = .04;
+	var yDir = ballSpeed; //.04;
+	var cpuScore = 0;
+	var playerScore = 0;
+	function moveBallAndMaintainPaddles()
+	{
+		ball.position.x += xDir;
+		ball.position.y += yDir;
+			
+		// Sideways movement of paddles
+		if( Key.isDown( Key.A ) ) // left
+		{
+			paddle2.position.x -= 0.12;
+		}
+		else if( Key.isDown( Key.D ) ) // right
+		{
+			paddle2.position.x += 0.12;
+		}
+		
+		// Ball hits wall so bounce back
+		if( ball.position.x < -7.5 ) 
+		{
+			ball.position.x = -7.4;
+			xDir = -xDir;
+			three.play();
+		}
+		else if( ball.position.x > 7.5 ) 
+		{
+			ball.position.x = 7.4;
+			xDir = -xDir;
+			four.play();
+		}
+		
+		// Paddle collision
+		if( ball.position.y < -8.5 && yDir < 0 ) // player paddle
+		{
+			// document.write("player here ");
+			yDir = ballSpeed;	// speed which payer hits ball back
+			
+			if( Math.abs( paddle2.position.x - ball.position.x ) <= 2 )
+			{
+				if (paddle2.position.x < ball.position.x) 
+				{
+					xDir = Math.abs(5 * xDir);
+					if (xDir >= 0.1)
+						xDir = 0.1;
+					else
+						xDir = 0.08;
+				}
+				else 
+				{
+					xDir = -Math.abs(5 * xDir);
+					if (xDir <= -0.1)
+						xDir = -0.1;
+					else
+						xDir = -0.08;
+				} 
+				coin2.play();
+			}
+			else // miss ball
+			{
+				ball.position.x = ball.position.y = 0; 		//restart ball at center?
+				cheers2.play();								// play cheers for cpu score
+				cpuScore++;									// cpu gets 1 point
+				xDir = 0.04;								// reset
+			}
+		}
+		else if( ball.position.y > 8.5 && yDir > 0 ) // cpu paddle
+		{
+			// document.write("enter here2 ");
+			yDir = -ballSpeed;
+			
+			if( Math.abs( paddle1.position.x - ball.position.x ) <= 2 )
+			{
+				if (paddle2.position.x < ball.position.x) 
+				{
+					xDir = Math.abs(5 * xDir);
+					if (xDir >= 0.1)
+						xDir = 0.1;
+					else
+						xDir = 0.08;
+				}
+				else 
+				{
+					xDir = -Math.abs(5 * xDir);
+					if (xDir <= -0.1)
+						xDir = -0.1;
+					else
+						xDir = -0.08;
+				} 
+
+				coin2.play();
+			}
+			else // miss ball
+			{
+				ball.position.x = ball.position.y = 0;
+				cheers2.play();
+				playerScore++;
+				xDir = 0.04;
+			}
+		}
+			
+		// CPU paddle tracks ball
+		paddle1.position.x = ball.position.x;
+
+		scene.remove(cpuScoreMain);
+		scene.remove(playerScoreMain);
+		scoreUpdate();
+	}
+
+	function score()
+	{
+		// Scoreboard and score color 0xd8d8d8 0xaaff77
+		var planeMaterial = new THREE.MeshBasicMaterial({ color: 0xC0C0C0 });
+		var scoreColor = new THREE.MeshBasicMaterial({ color: 0xb02179 });
+
+		// 'Computer' title
+		var planeGeometry = new THREE.BoxGeometry(9, 10, 0.5);
+		var cpuScoreboard = new THREE.Mesh(planeGeometry, planeMaterial);
+		cpuScoreboard.position.x = -16;
+		cpuScoreboard.position.y = 4;
+		cpuScoreboard.position.z = 1;
+		scene.add(cpuScoreboard);
+
+		var textGeometry1 = new THREE.TextGeometry("Computer",
+			{
+				size: 1,
+				height: 0.2,
+				curveSegments: 10,
+				bevelEnabled: false
+			}
+		);
+
+		cpuScoreShow = new THREE.Mesh(textGeometry1, scoreColor);
+		cpuScoreShow.position.x = -18.5;
+		cpuScoreShow.position.y = 7;
+		cpuScoreShow.position.z = 1.8;
+		scene.add(cpuScoreShow);
+
+		// 'Player' title
+		var planeGeometry = new THREE.BoxGeometry(9, 10, 0.5);
+		var playerScoreboard = new THREE.Mesh(planeGeometry, planeMaterial);
+		playerScoreboard.position.x = 16;
+		playerScoreboard.position.y = 4;
+		playerScoreboard.position.z = 1;
+		scene.add(playerScoreboard);
+
+		var textGeometry2 = new THREE.TextGeometry("Player",
+			{
+				size: 1,
+				height: 0.2,
+				curveSegments: 10,
+				bevelEnabled: false
+			}
+		);
+
+		playerScoreShow = new THREE.Mesh(textGeometry2, scoreColor);
+		playerScoreShow.position.x = 14;
+		playerScoreShow.position.y = 7;
+		playerScoreShow.position.z = 1.8;
+		scene.add(playerScoreShow);
+	}
+
+	var cpuScoreMain; 
+	var playerScoreMain;
+	function scoreUpdate()
+	{
+		var scoreColor = new THREE.MeshBasicMaterial({ color: 0xb02179 });
+
+		// Update CPU's score count
+		var textGeometry1 = new THREE.TextGeometry(cpuScore,
+			{
+				size: 5,
+				height: 0.2,
+				curveSegments: 10,
+				bevelEnabled: false
+			}
+		);
+
+		cpuScoreMain = new THREE.Mesh(textGeometry1, scoreColor);
+		cpuScoreMain.position.x = -19.5;
+		cpuScoreMain.position.y = 1;
+		cpuScoreMain.position.z = 1.8;
+		scene.add(cpuScoreMain);
+
+
+		// Update player's score count
+		var textGeometry2 = new THREE.TextGeometry(playerScore,
+			{
+				size: 5,
+				height: 0.2,
+				curveSegments: 10,
+				bevelEnabled: false
+			}
+		);
+
+		playerScoreMain = new THREE.Mesh(textGeometry2, scoreColor);
+		playerScoreMain.position.x = 11.75;
+		playerScoreMain.position.y = 1;
+		playerScoreMain.position.z = 1.8;
+		scene.add(playerScoreMain);
+	}
+
+	function instruction()
+	{
+		document.getElementById("info");
+		// var textColor = new THREE.MeshBasicMaterial({ color: 0xffffff });
+
+		// var textGeometry1 = new THREE.TextGeometry("How to Play:",
+		// 	{
+		// 		size: 1,
+		// 		height: 0.2,
+		// 		curveSegments: 10,
+		// 		bevelEnabled: false
+		// 	}
+		// );
+
+		// cpuScoreShow = new THREE.Mesh(textGeometry1, textColor);
+		// cpuScoreShow.position.x = -24.5;
+		// cpuScoreShow.position.y = -5;
+		// scene.add(cpuScoreShow);
+	}
+	
+	var explode, one, two, three, four, five, coin, cheers, boo;
+	function loadSounds()
+	{
+		var audio = new Audio("sounds/Mr_Spastic.mp3");
+		audio.loop = true;
+		audio.play();
+
+		explode = new Audio("sounds/Explosion.mp3");
+		one = new Audio("sounds/1.mp3");
+		two = new Audio("sounds/2.mp3");
+		three = new Audio("sounds/3.mp3");
+		four = new Audio("sounds/4.mp3");
+		five = new Audio("sounds/5.mp3");
+		
+		coin = new Audio("sounds/coins.mp3");
+		coin2 = new Audio("sounds/coins2.mp3");
+		cheers = new Audio("sounds/cheers.mp3");
+		cheers2 = new Audio("sounds/cheers2.mp3");
+		boo = new Audio("sounds/boo.mp3");
+	}
+
+	window.onload = init;
+</script>
+
+</body>
+
+</html>
