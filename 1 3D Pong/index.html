@@ -17,13 +17,14 @@
 			position: absolute;
 			top: 65%;
 			left: 37px;
-			width: 100%;
 			text-align: left;
 			z-index: 100;
 			display:block;
 			color: white;
 			font-family: Arial, Helvetica, sans-serif;
 			font-size: 22px;
+			width: 13em;
+			word-wrap: normal;
 		}
 	
 	</style>
@@ -31,9 +32,8 @@
 
 <body>
 
-<!-- <div id="info">How to Play:</div> -->
 <h1 id="info">How to Play: </h1>
-<p id="info"><br><br>Use the A-key to move the paddle <br>left and the D-key to move the <br>paddle right.</p>
+<p id="info"><br><br>Use the A-key/Left-key to move the paddle left and the D-key/Right-key to move the paddle right.</p>
 
 <script>
 	var renderer;
@@ -202,24 +202,26 @@
 		scene.add( ball );
 	}
 
-	var ballSpeed = 0.19;
-	var xDir = .04;
-	var yDir = ballSpeed; //.04;
+	var ballSpeed = 0.23;
+	var cpuSpeed = 0.1;
+	var ballMoving = false;
+	var xDir = .05;
+	var yDir =  ballSpeed;
 	var cpuScore = 0;
 	var playerScore = 0;
 	function moveBallAndMaintainPaddles()
 	{
 		ball.position.x += xDir;
 		ball.position.y += yDir;
-			
+	
 		// Sideways movement of paddles
-		if( Key.isDown( Key.A ) ) // left
+		if( Key.isDown( Key.A ) || Key.isDown(Key.LEFTARROW) ) // left
 		{
-			paddle2.position.x -= 0.12;
+				paddle2.position.x -= 0.12;
 		}
-		else if( Key.isDown( Key.D ) ) // right
+		else if( Key.isDown( Key.D ) || Key.isDown(Key.RIGHTARROW)) // right
 		{
-			paddle2.position.x += 0.12;
+				paddle2.position.x += 0.12;
 		}
 		
 		// Ball hits wall so bounce back
@@ -235,36 +237,37 @@
 			xDir = -xDir;
 			four.play();
 		}
-		
+
 		// Paddle collision
 		if( ball.position.y < -8.5 && yDir < 0 ) // player paddle
 		{
 			// document.write("player here ");
-			yDir = ballSpeed;	// speed which payer hits ball back
-			
+			yDir = ballSpeed;
+
 			if( Math.abs( paddle2.position.x - ball.position.x ) <= 2 )
 			{
 				if (paddle2.position.x < ball.position.x) 
 				{
-					xDir = Math.abs(5 * xDir);
+					xDir = Math.abs(3 * xDir);
 					if (xDir >= 0.1)
 						xDir = 0.1;
 					else
-						xDir = 0.08;
+						xDir = 0.05;
 				}
 				else 
 				{
-					xDir = -Math.abs(5 * xDir);
+					xDir = -Math.abs(3 * xDir);
 					if (xDir <= -0.1)
 						xDir = -0.1;
 					else
-						xDir = -0.08;
+						xDir = -0.05;
 				} 
+
 				coin2.play();
 			}
 			else // miss ball
 			{
-				ball.position.x = ball.position.y = 0; 		//restart ball at center?
+				ball.position.x = ball.position.y = 0; 		//restart ball at center
 				cheers2.play();								// play cheers for cpu score
 				cpuScore++;									// cpu gets 1 point
 				xDir = 0.04;								// reset
@@ -273,25 +276,25 @@
 		else if( ball.position.y > 8.5 && yDir > 0 ) // cpu paddle
 		{
 			// document.write("enter here2 ");
-			yDir = -ballSpeed;
+			yDir = -ballSpeed; 				
 			
 			if( Math.abs( paddle1.position.x - ball.position.x ) <= 2 )
 			{
-				if (paddle2.position.x < ball.position.x) 
+				if (paddle1.position.x < ball.position.x) 
 				{
-					xDir = Math.abs(5 * xDir);
+					xDir = Math.abs(3 * xDir);
 					if (xDir >= 0.1)
 						xDir = 0.1;
 					else
-						xDir = 0.08;
+						xDir = 0.05;
 				}
 				else 
 				{
-					xDir = -Math.abs(5 * xDir);
+					xDir = -Math.abs(3 * xDir);
 					if (xDir <= -0.1)
 						xDir = -0.1;
 					else
-						xDir = -0.08;
+						xDir = -0.05;
 				} 
 
 				coin2.play();
@@ -304,9 +307,9 @@
 				xDir = 0.04;
 			}
 		}
-			
-		// CPU paddle tracks ball
-		paddle1.position.x = ball.position.x;
+		
+		// CPU ball tracking
+		paddle1.position.x = ball.position.x; 
 
 		scene.remove(cpuScoreMain);
 		scene.remove(playerScoreMain);
@@ -426,7 +429,7 @@
 		// scene.add(cpuScoreShow);
 	}
 	
-	var explode, one, two, three, four, five, coin, cheers, boo;
+	var explode, one, two, three, four, five, coin, coin2, cheers, cheers2, boo;
 	function loadSounds()
 	{
 		var audio = new Audio("sounds/Mr_Spastic.mp3");
