@@ -4,17 +4,17 @@
 	var spotLight;
 	var smsh;
 	
-	<!-- add objects in the scope so all methods can access -->
+	//<!-- add objects in the scope so all methods can access -->
 	var groundPlane;
 	var ball;
 
-	<!-- 3. Add the following two lines. -->
+	//<!-- 3. Add the following two lines. -->
 	Physijs.scripts.worker = 'libs/physijs_worker.js';
     Physijs.scripts.ammo = 'ammo.js';
 	
 	function init()
 	{
-		<!-- 4. Edit the scene creation -->
+		//<!-- 4. Edit the scene creation -->
 		scene = new Physijs.Scene();
 		scene.setGravity(new THREE.Vector3( 0, 0, -30 ));
 		
@@ -22,17 +22,19 @@
 		setupRenderer();
 		addSpotLight();
 		
-		<!-- 5. Ground plane -->
+		//<!-- 5. Ground plane -->
 		createGroundPlane();
 		
-		<!-- 7. Create and add cannon -->
+		//<!-- 7. Create and add cannon -->
 		createCannon();
 		
-		<!-- 11. Create ball -->
+		//<!-- 11. Create ball -->
 		createBall();
 		
-		<!-- 14. Create target -->
+		//<!-- 14. Create target -->
 		createTarget();
+
+		loadSounds();
 	
 		// Output to the stream
 		document.body.appendChild( renderer.domElement );
@@ -43,19 +45,19 @@
 	
 	function render()
 	{
-		<!-- 6. Physics simulation -->
+		//<!-- 6. Physics simulation -->
 		scene.simulate();
 		
-		<!-- 9. Maintain cannon elevation controls -->
+		//<!-- 9. Maintain cannon elevation controls -->
 		maintainCannonElevationControls();
 		
-		<!-- 10. Maintain cannon right/left -->
+		//<!-- 10. Maintain cannon right/left -->
 		maintainCannonRightLeft();
 
-		<!-- 12. Look for ball keypresses -->
+		//<!-- 12. Look for ball keypresses -->
 		maintainBallKeypresses();
 		
-		<!-- 15. Check for ball off the plane -->
+		//<!-- 15. Check for ball off the plane -->
 		checkBallPosition();
 
 		// Request animation frame
@@ -65,11 +67,10 @@
 		renderer.render( scene, camera );
 	}
 	
-	<!-- 5. Ground plane -->
+	//<!-- 5. Ground plane -->
 	function createGroundPlane()
 	{
-		var texture = THREE.ImageUtils.loadTexture('images/groundterrain.jpg');
-		
+		var texture = THREE.ImageUtils.loadTexture('images/space.jpg');
 		var planeMaterial = new Physijs.createMaterial(new THREE.MeshLambertMaterial({map:texture}), .4, .8 );
 		var planeGeometry = new THREE.PlaneGeometry( 200, 200, 6 );
 		groundPlane = new Physijs.BoxMesh( planeGeometry, planeMaterial, 0 );
@@ -78,7 +79,7 @@
 		scene.add( groundPlane );
 	}
 	
-	<!-- 7. Create cannon -->
+	//<!-- 7. Create cannon -->
 	function createCannon()
 	{
 		var cylinderGeometry = new THREE.CylinderGeometry( 2, 2, 10 );
@@ -86,7 +87,7 @@
 		var can = new THREE.Mesh( cylinderGeometry, cylinderMaterial );
 		can.position.y = -5;
 
-		<!-- 8. Create Object3D wrapper that will allow use to correctly rotate -->
+		//<!-- 8. Create Object3D wrapper that will allow use to correctly rotate -->
 		cannon = new THREE.Object3D();
 		cannon.add( can );
 		
@@ -97,7 +98,7 @@
 		scene.add( cannon );
 	}
 	
-	<!-- 9. Maintain cannon elevation controls -->
+	//<!-- 9. Maintain cannon elevation controls -->
 	function maintainCannonElevationControls()
 	{
 		if( Key.isDown(Key.W))
@@ -118,7 +119,7 @@
 		}
 	}
 
-	<!-- 10. Maintain cannon right/left -->
+	//<!-- 10. Maintain cannon right/left -->
 	function maintainCannonRightLeft()
 	{
 		if( Key.isDown(Key.A))
@@ -131,7 +132,7 @@
 		}
 	}
 	
-	<!-- 12. Look for ball keypresses -->
+	//<!-- 12. Look for ball keypresses -->
 	var ballLaunched = false;
 	function maintainBallKeypresses()
 	{
@@ -149,7 +150,7 @@
 		}
 	}
 	
-	<!-- 11. Create ball -->
+	//<!-- 11. Create ball -->
 	function createBall()
 	{
 		var ballGeometry = new THREE.SphereGeometry( 3 );
@@ -170,7 +171,7 @@
 		});
 	}
 
-	<!-- 14. Create target -->
+	//<!-- 14. Create target -->
 	var targetlist;
 	function createTarget()
 	{
@@ -204,7 +205,7 @@
 		scene.add( smsh );
 	}
 	
-	<!-- 15. Check for ball off the plane -->
+	//<!-- 15. Check for ball off the plane -->
 	function checkBallPosition()
 	{
 		if( smsh.position.y > 5 )
@@ -240,6 +241,17 @@
         spotLight.castShadow = true;
 		spotLight.intensity = 3;
         scene.add(spotLight);
+	}
+
+	var cannonSound;
+	function loadSounds() {
+		// Background music
+		var audio = new Audio("sounds/condition_omega.mp3");
+		audio.loop = true;
+		audio.play();
+
+		// Foley
+		cannonSound = new Audio("sounds/cannon1.wav");
 	}
 	
 	window.onload = init;
