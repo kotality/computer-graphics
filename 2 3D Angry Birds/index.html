@@ -13,11 +13,126 @@
     <script src="fonts/helvetiker.js"></script>
     <script src="js/startingAngryBirdsDemo.js"></script>
 
-    <!-- <script src="js/AngryBirds.js"></script> -->
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- From threejs examples -->
+    <script src="libs/Detector.js"></script>
+    <script src="libs/stats.min.js"></script>
+    <script src="libs/OrbitControls.js"></script>
+    <script src="libs/dat.gui.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#info').hide();
+
+            $("button").click(function () {
+                $('#info').toggle();
+            });
+
+            $("button").css("opacity", "0.5");
+            $("p").css("opacity", "0.5");
+        });
+
+        
+    </script>
+
+    <style>
+        #info {
+            position: absolute;
+            top: 4%;
+            left: 2%;
+            text-align: left;
+            z-index: 100;
+            display: block;
+            color: #EAF3EC;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 22px;
+            width: 13em;
+            word-wrap: normal;
+        }
+        #buttons {
+            position: absolute;
+            top: 3%;
+           /* left: 0%; */
+            text-align: left;
+            z-index: 100;
+            display: block;
+            color: #010F03;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 22px;
+            width: 13em;
+            word-wrap: normal;
+        }
+        #personal {
+            position: absolute;
+            top: 1%;
+            left: 90%;
+            text-align: left;
+            z-index: 100;
+            display: block;
+            color: #F8FCF9;
+            font-family: Impact, Arial, Helvetica, sans-serif;
+            font-size: 22px;
+            width: 13em;
+            word-wrap: normal;
+        }
+
+        td, th { 
+            border: 0px dotted #dddddd; 
+            text-align: left; 
+            padding: 6px;
+        }
+
+        /* For scrollbars */
+        html, body{
+            overflow-x: hidden; 
+            overflow-y: hidden;
+        }
+    </style>
 
 </head>
 
 <body>
+
+    <button id="buttons">Click here for instructions</button>
+    <p id ="info">
+        <table id = "info">
+            <tr>
+                <th><strong>Cannon</strong></th>
+                <th><strong>Key</strong></th>
+            </tr>
+            <tr>
+                <td>Up</td>
+                <td>W</td>
+            </tr>
+            <tr>
+                <td>Down</td>
+                <td>S</td>
+            </tr>
+            <tr>
+                <td>Left</td>
+                <td>A</td>
+            </tr>
+            <tr>
+                <td>Right</td>
+                <td>D</td>
+            </tr>
+            <tr>
+                <td>Shoot</td>
+                <td>J</td>
+            </tr>
+            <tr>
+                <td>Reset Ball</td>
+                <td>R</td>
+            </tr>
+        </table>
+        <!-- <br>Cannon:
+        <br>Use A and D to look left and right.
+        <br>Use W and S to look up and down. -->
+    </p>  
+    
+    <p id = "personal">Kenia Castro</p>
 
 </body>
 
