@@ -4,6 +4,7 @@ var camera;
 var controls;
 var spotLight;
 var smsh;
+var playerScore = 0;
 
 //<!-- add objects in the scope so all methods can access -->
 var groundPlane;
@@ -38,6 +39,10 @@ function init()
 	extraTarget2();
 	extraTarget3();
 	extraTarget4();
+
+	obstacles();
+	score();
+	scoreUpdate();
 
 	gameName();
 
@@ -198,11 +203,11 @@ function maintainBallKeypresses()
 //<!-- 11. Create ball -->
 function createBall()
 {
-	var texture = THREE.ImageUtils.loadTexture('images/metal4.jpg');
+	var texture = THREE.ImageUtils.loadTexture('images/metal5.jpg');
 
 	var ballGeometry = new THREE.SphereGeometry( 3 );
 	//var ballMaterial = Physijs.createMaterial( new THREE.MeshLambertMaterial({color:'white'}), .95, .95 );
-	var ballMaterial = Physijs.createMaterial(new THREE.MeshLambertMaterial({ map: texture }), .95, .95);
+	var ballMaterial = Physijs.createMaterial(new THREE.MeshLambertMaterial({ map: texture }), .95, .95);	
 	ball = new Physijs.SphereMesh( ballGeometry, ballMaterial );
 	
 	ball.position.x = cannon.position.x + Math.cos((Math.PI/2)-cannon.rotation.z) * 10;
@@ -211,18 +216,16 @@ function createBall()
 	
 	ball.name = 'CannonBall';
 	
-	ball.collisions = 0;
-	ball.addEventListener( 'collision', function( other_object, linear_velocity, angular_velocity )
+	ball.addEventListener('collision', function (other_object, linear_velocity, angular_velocity )
 	{
-		// if (other_object.name == 'groundPlane' && Math.abs(linear_velocity.x) >= 2.5) 
-		// {
-		// 	ball.removeEventListener('collision', false);
-		// 	crash.play();
-		// }
-		if( other_object.name != "GroundPlane" )
+		if (other_object.name == "TargetBall" || other_object.name == "TargetBall2" || other_object.name == "TargetBall3" || other_object.name == "TargetBall4")
 		{
-			// crash.play();
-		}		
+			ball.removeEventListener('collision', false);
+			crash.play();
+			playerScore++;
+			scene.remove(playerScoreMain);
+			scoreUpdate();
+		}			
 	});
 }
 
@@ -291,7 +294,7 @@ function extraTarget2()
 	smsh.position.x = 65;
 	smsh.position.y = -40;
 	smsh.position.z = 16;
-	smsh.name = "TargetBall";
+	smsh.name = "TargetBall2";
 	
 	scene.add( smsh );
 }
@@ -324,7 +327,7 @@ function extraTarget3()
 	smsh.position.x = 40;
 	smsh.position.y = 25;
 	smsh.position.z = 16;
-	smsh.name = "TargetBall";
+	smsh.name = "TargetBall3";
 
 	scene.add(smsh);
 }
@@ -357,9 +360,44 @@ function extraTarget4()
 	smsh.position.x = 35;
 	smsh.position.y = -20;
 	smsh.position.z = 16;
-	smsh.name = "TargetBall";
+	smsh.name = "TargetBall4";
 
 	scene.add(smsh);
+}
+
+function obstacles()
+{
+	var geo = new THREE.BoxGeometry(4, 18, 12);
+	var mat = Physijs.createMaterial(new THREE.MeshLambertMaterial({ color: 'white' }), .95, .95);
+	var msh = new Physijs.BoxMesh(geo, mat);
+	msh.position.x = 20; msh.position.y = -20; 
+	msh.position.z = 6;
+
+	var geo2 = new THREE.BoxGeometry(3, 30, 12);
+	var mat2 = Physijs.createMaterial(new THREE.MeshLambertMaterial({ color: 'white' }), .95, .95);
+	var msh2 = new Physijs.BoxMesh(geo2, mat2);
+	msh2.position.x = 5; msh2.position.y = -10;
+	msh2.position.z = 6;
+
+	var geo3 = new THREE.BoxGeometry(3, 30, 13);
+	var mat3 = Physijs.createMaterial(new THREE.MeshLambertMaterial({ color: 'white' }), .95, .95);
+	var msh3 = new Physijs.BoxMesh(geo3, mat3);
+	msh3.position.x = 17; msh3.position.y = 20;
+	msh3.position.z = 6;
+
+	var msh4 = new Physijs.BoxMesh(geo3, mat3);
+	msh4.position.x = 65; msh4.position.y = 20;
+	msh4.position.z = 6;
+
+	var msh5 = new Physijs.BoxMesh(geo3, mat3);
+	msh5.position.x = 50; msh5.position.y = -30;
+	msh5.position.z = 6;
+
+	scene.add(msh);
+	scene.add(msh2);
+	scene.add(msh3);
+	scene.add(msh4);
+	scene.add(msh5);
 }
 
 //<!-- 15. Check for ball off the plane -->
@@ -402,7 +440,7 @@ function addSpotLight()
 
 function gameName() 
 {
-	var scoreColor = new THREE.MeshLambertMaterial({ color: "white" });
+	var color = new THREE.MeshLambertMaterial({ color: "white" });
 
 	var textGeometry2 = new THREE.TextGeometry("Cannon Planets",
 		{
@@ -416,30 +454,51 @@ function gameName()
 		}
 	);
 
-	playerScoreShow = new THREE.Mesh(textGeometry2, scoreColor);
-	playerScoreShow.position.x = -100;
-	playerScoreShow.position.y = 60;
-	playerScoreShow.position.z = 1.8;
-	scene.add(playerScoreShow);
+	var show = new THREE.Mesh(textGeometry2, color);
+	show.position.x = -100;
+	show.position.y = 60;
+	show.position.z = 1.8;
+	scene.add(show);
+}
+
+function score()
+{
+	var scoreColor = new THREE.MeshLambertMaterial({ color: 0xb02179 });
+
+	var textGeometry1 = new THREE.TextGeometry("Score",
+		{
+			size: 8,
+			height: 2,
+			curveSegments: 10,
+			bevelEnabled: false
+		}
+	);
+
+	scoreShow = new THREE.Mesh(textGeometry1, scoreColor);
+	scoreShow.position.x = -130;
+	scoreShow.position.y = -50;
+	scoreShow.position.z = 1.8;
+	scene.add(scoreShow);
 }
 
 var playerScoreMain;
-function scoreUpdate() {
-	var scoreColor = new THREE.MeshBasicMaterial({ color: 0xb02179 });
+function scoreUpdate() 
+{
+	var scoreColor = new THREE.MeshLambertMaterial({ color: 0xb02179 });
 
 	// Update player's score count
 	var textGeometry2 = new THREE.TextGeometry(playerScore,
 		{
-			size: 5,
-			height: 0.2,
+			size: 8,
+			height: 2,
 			curveSegments: 10,
 			bevelEnabled: false
 		}
 	);
 
 	playerScoreMain = new THREE.Mesh(textGeometry2, scoreColor);
-	playerScoreMain.position.x = 40;
-	playerScoreMain.position.y = 1;
+	playerScoreMain.position.x = -120;
+	playerScoreMain.position.y = -60;
 	playerScoreMain.position.z = 1.8;
 	scene.add(playerScoreMain);
 }
@@ -447,9 +506,9 @@ function scoreUpdate() {
 var cannonShot, moveCannon, reload, hitTarget;
 function loadSounds() {
 	// Background music
-	// var audio = new Audio("sounds/condition_omega.mp3");
-	// audio.loop = true;
-	// audio.play();
+	var audio = new Audio("sounds/condition_omega.mp3");
+	audio.loop = true;
+	audio.play();
 
 	// Foley
 	cannonShot = new Audio("sounds/cannon1.wav");

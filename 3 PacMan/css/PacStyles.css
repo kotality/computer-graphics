@@ -1,0 +1,77 @@
+#Main
+{
+	Width: 97%;
+	Height: 97%;
+}
+
+#MainView
+{
+	Width: 100%;
+	Height: 100%;
+	Position: Absolute;
+}
+
+#HUDView
+{
+	Width: 400px;
+	Height: 400px;
+	Position: Absolute;
+	Left: 20px;
+	Bottom: 20px;
+	Z-Index: 1000;
+}
+
+#info {
+	position: absolute;
+	top: 4%;
+	left: 2%;
+	text-align: left;
+	z-index: 100;
+	display: block;
+	color: #EAF3EC;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 22px;
+	width: 13em;
+	word-wrap: normal;
+}
+
+#buttons {
+	position: absolute;
+	top: 3%;
+	/* left: 0%; */
+	text-align: left;
+	z-index: 100;
+	display: block;
+	color: #010F03;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 22px;
+	width: 13em;
+	word-wrap: normal;
+}
+
+#personal {
+	position: absolute;
+	top: 1%;
+	left: 90%;
+	text-align: left;
+	z-index: 100;
+	display: block;
+	color: #F8FCF9;
+	font-family: Impact, Arial, Helvetica, sans-serif;
+	font-size: 22px;
+	width: 13em;
+	word-wrap: normal;
+}
+		
+td, th { 
+	border: 0px dotted #dddddd; 
+	text-align: left; 
+	padding: 6px;
+}
+		
+html, body { 
+	overflow-x: hidden; 
+	overflow-y: hidden; 
+	margin: 0; 
+	padding: 0; 
+}

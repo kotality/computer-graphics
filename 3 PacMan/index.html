@@ -1,0 +1,81 @@
+<!--
+	Kenia Castro
+	CAP 4720 Computer Graphics 
+	Fall 2017 
+	HW #3 - PacMan
+-->
+<html>
+
+<head>
+	<script src="libs/three.js"></script>
+	<script src="libs/keyboard.js"></script>
+	<link rel="stylesheet" href="css/PacStyles.css">
+
+	<script src="jquery-3.2.1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			$('#info').hide();
+
+			$("button").click(function () {
+				$('#info').toggle();
+			});
+
+			$("button").css("opacity", "0.5");
+			$("p").css("opacity", "0.5");
+		});
+	</script>
+</head>
+
+<body>
+	<div id="Main">
+		<div id="MainView"></div>
+		<div id="HUDView"></div>
+	</div>
+	
+	<script src="js/addHUDForPacMan.js"></script>
+
+	<!-- Instructions -->
+	<button id="buttons">Click here for instructions</button>
+	<p id="info">
+		<table id="info">
+			<tr>
+				<th><strong>Cannon</strong></th>
+				<th><strong>Key</strong></th>
+			</tr>
+			<tr>
+				<td>Up</td>
+				<td>W</td>
+			</tr>
+			<tr>
+				<td>Down</td>
+				<td>S</td>
+			</tr>
+			<tr>
+				<td>Left</td>
+				<td>A</td>
+			</tr>
+			<tr>
+				<td>Right</td>
+				<td>D</td>
+			</tr>
+			<tr>
+				<td>Shoot</td>
+				<td>J</td>
+			</tr>
+			<tr>
+				<td>Reset Ball</td>
+				<td>R</td>
+			</tr>
+		</table>
+		<!-- <br>Cannon:
+        <br>Use A and D to look left and right.
+        <br>Use W and S to look up and down. -->
+	</p>
+
+	<p id="personal">Kenia Castro</p>
+
+</body>
+
+</html>
