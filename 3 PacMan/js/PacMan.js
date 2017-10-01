@@ -73,6 +73,7 @@ function setupCameras()
 
 function render()
 {
+	// Player rotate camera left and right
 	if( Key.isDown( Key.A ) )
 	{
 		camera.rotation.y += 0.01;
@@ -82,6 +83,7 @@ function render()
 		camera.rotation.y -= 0.01;
 	}
 
+	// Player move forward and back
 	if( Key.isDown( Key.W ) )
 	{
 		var deltaX = Math.sin(camera.rotation.y)*.2;
@@ -103,7 +105,7 @@ function render()
 	
 	// player.position = camera.position; Does not work
 	
-	// Level to overhead
+	// Move from ground level to overhead
 	if( Key.isDown(Key._1))
 	{
 		camera.position.y = 0;
@@ -129,7 +131,7 @@ function render()
 		camera.position.y = 2.5;
 	}
 	
-	// Brightness
+	// Adjust Brightness
 	if( Key.isDown(Key._7))
 	{
 		setBrightness(12);
@@ -147,7 +149,7 @@ function render()
 		setBrightness(6);
 	}
 	
-	// Minimap move
+	// Rotate MiniMap up and down from central pivot
 	if( Key.isDown(Key.U))
 	{
 		cameraHUD.rotation.x -= 0.1;
@@ -156,6 +158,8 @@ function render()
 	{
 		cameraHUD.rotation.x += 0.1;
 	}
+
+	//??????????
 	if( Key.isDown(Key.O))
 	{
 		cameraHUD.fov -= 1;
@@ -177,7 +181,7 @@ function render()
 		camera.updateProjectionMatrix();
 	}
 
-	// Zoom
+	// Zoom MiniMap
 	if( Key.isDown(Key.N))
 	{
 		cameraHUD.position.y -= 1;
@@ -189,6 +193,7 @@ function render()
 		camera.updateProjectionMatrix();
 	}
 
+	// Scroll MiniMap up and down
 	if( Key.isDown(Key.V))
 	{
 		cameraHUD.position.z -= 1;
@@ -225,9 +230,9 @@ function setBrightness( value )
 function addObjectsToScene()
 {
 	var x, z;
-	for( z=-100; z<=100; z+=5 )
+	for( z=-50; z<=50; z+=5 )
 	{
-		for( x=-100; x<=100; x+= 5)
+		for( x=-50; x<=50; x+= 5)
 		{
 			if( x == 0 && z == 0 )
 			{
