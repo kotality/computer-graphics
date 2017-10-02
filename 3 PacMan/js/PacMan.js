@@ -38,9 +38,10 @@ function init()
 	render();
 }
 
+// Ball; Pacman
 function setupPlayer()
 {
-	var ballGeometry = new THREE.SphereGeometry( 3 );
+	var ballGeometry = new THREE.SphereGeometry( 3 ); // radius of sphere = 3
 	var ballMaterial = new THREE.MeshLambertMaterial({color:'white'});
 	player = new THREE.Mesh( ballGeometry, ballMaterial );
 	scene.add( player );
@@ -63,11 +64,16 @@ function setupRenderers()
 function setupCameras()
 {
 	camera = new THREE.PerspectiveCamera(45,window.innerWidth/window.innerHeight,0.1,1000);
-	camera.lookAt( scene.position );
+	// camera.lookAt( scene.position);
+	camera.position.z = 0;
+	camera.position.y = 100;
+	// camera.position.y = 100;
+	camera.rotation.x = 4.7;
+	// camera.rotation.y = 30;
 
 	// HUD
 	cameraHUD = new THREE.PerspectiveCamera(ca,ar,0.1,4000);
-	cameraHUD.position.y = 41;
+	cameraHUD.position.y = 51;
 	cameraHUD.lookAt( new THREE.Vector3(0,0,0) );
 }
 
@@ -81,6 +87,16 @@ function render()
 	if( Key.isDown( Key.D ) )
 	{
 		camera.rotation.y -= 0.01;
+	}
+
+	// Rotate camerea up and down
+	if (Key.isDown(Key.Q))
+	{
+		camera.rotation.x -= 0.01;
+	}
+	if (Key.isDown(Key.E)) 
+	{
+		camera.rotation.x += 0.01;
 	}
 
 	// Player move forward and back
@@ -182,12 +198,12 @@ function render()
 	}
 
 	// Zoom MiniMap
-	if( Key.isDown(Key.N))
+	if( Key.isDown(Key.M))
 	{
 		cameraHUD.position.y -= 1;
 		camera.updateProjectionMatrix();
 	}
-	if( Key.isDown(Key.M))
+	if( Key.isDown(Key.N))
 	{
 		cameraHUD.position.y += 1;
 		camera.updateProjectionMatrix();
@@ -241,8 +257,8 @@ function addObjectsToScene()
 			var r = Math.floor( Math.random() * 255 );
 			var g = Math.floor( Math.random() * 255 );
 			var b = Math.floor( Math.random() * 255 );
-			var col = r * 65536 + g * 256 + b;
-			var cube = new THREE.Mesh(new THREE.BoxGeometry(2,2,2),new THREE.MeshLambertMaterial({color:col}));
+			var col = r * 65536 + g * 256 + b; // BoxGeometry(width, height, depth)
+			var cube = new THREE.Mesh(new THREE.BoxGeometry(2,5,3),new THREE.MeshLambertMaterial({color:col}));
 			cube.position.x = x;
 			cube.position.z = z;
 			scene.add( cube );
@@ -252,6 +268,7 @@ function addObjectsToScene()
 
 function setupSpotlight(x,z,color,number)
 {
+	// SpotLight( color, intensity, distance, angle, penumbra, decay )
 	spotLight = new THREE.SpotLight( color, 12, 300, 1, 0, 0 );
 	spotLight.position.set( x, 100, z );
 	spotLight.target.position.set( x,0,z);
