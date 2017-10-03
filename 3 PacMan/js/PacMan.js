@@ -7,9 +7,12 @@ var player;
 var rw = 200, rh = 150;
 var ca = 100, ar = 2;
 
+Physijs.scripts.worker = 'libs/physijs_worker.js';
+Physijs.scripts.ammo = 'ammo.js';
+
 function init()
 {
-	scene = new THREE.Scene();
+	scene = new Physijs.Scene();
 
 	setupRenderers();
 	setupCameras();
@@ -21,7 +24,8 @@ function init()
 	
 	setupPlayer();
 	
-	addObjectsToScene();
+	// addObjectsToScene();
+	addWalls();
 	
 	// Main code here.
 	
@@ -41,9 +45,12 @@ function init()
 // Ball; Pacman
 function setupPlayer()
 {
-	var ballGeometry = new THREE.SphereGeometry( 3 ); // radius of sphere = 3
-	var ballMaterial = new THREE.MeshLambertMaterial({color:'white'});
-	player = new THREE.Mesh( ballGeometry, ballMaterial );
+	var texture = THREE.ImageUtils.loadTexture('images/metal3.jpg');
+
+	var ballGeometry = new THREE.SphereGeometry( 1 ); // radius of sphere = 3
+	// var ballMaterial = new THREE.MeshLambertMaterial({color:'white'});
+	var ballMaterial = new Physijs.createMaterial(new THREE.MeshLambertMaterial({ map: texture }), .95, .95);	
+	player = new Physijs.SphereMesh( ballGeometry, ballMaterial );
 	scene.add( player );
 }
 
@@ -67,9 +74,7 @@ function setupCameras()
 	// camera.lookAt( scene.position);
 	camera.position.z = 0;
 	camera.position.y = 100;
-	// camera.position.y = 100;
 	camera.rotation.x = 4.7;
-	// camera.rotation.y = 30;
 
 	// HUD
 	cameraHUD = new THREE.PerspectiveCamera(ca,ar,0.1,4000);
@@ -87,16 +92,6 @@ function render()
 	if( Key.isDown( Key.D ) )
 	{
 		camera.rotation.y -= 0.01;
-	}
-
-	// Rotate camerea up and down
-	if (Key.isDown(Key.Q))
-	{
-		camera.rotation.x -= 0.01;
-	}
-	if (Key.isDown(Key.E)) 
-	{
-		camera.rotation.x += 0.01;
 	}
 
 	// Player move forward and back
@@ -121,6 +116,17 @@ function render()
 	
 	// player.position = camera.position; Does not work
 	
+
+	// Rotate camerea up and down
+	if (Key.isDown(Key.Q)) 
+	{
+		camera.rotation.x -= 0.01;
+	}
+	if (Key.isDown(Key.E)) 
+	{
+		camera.rotation.x += 0.01;
+	}
+
 	// Move from ground level to overhead
 	if( Key.isDown(Key._1))
 	{
@@ -243,22 +249,45 @@ function setBrightness( value )
 	}
 }
 
+function addWalls()
+{
+	// Outer Walls
+	var wallTexture = THREE.ImageUtils.loadTexture('images/water.jpg');
+
+	var outWallMaterial = Physijs.createMaterial(new THREE.MeshLambertMaterial({ map: wallTexture }), .95, .95);// .4, .8);
+	var outWallGeometry = new THREE.BoxGeometry(3, 5, 70); // width, height, depth
+	var outWall = new Physijs.BoxMesh(outWallGeometry, outWallMaterial, 0);
+	outWall.name = "outerWalls";
+	outWall.position.x = 40;
+	// outWall.position.z = 10;
+	scene.add(outWall);
+
+	// Inner Walls
+
+}
+
 function addObjectsToScene()
 {
 	var x, z;
-	for( z=-50; z<=50; z+=5 )
+	var texture = THREE.ImageUtils.loadTexture('images/water.jpg');
+
+	for( z=-35; z<=35; z+=5 )
 	{
-		for( x=-50; x<=50; x+= 5)
+		for( x=-35; x<=35; x+= 5)
 		{
 			if( x == 0 && z == 0 )
 			{
 				continue;
 			}
-			var r = Math.floor( Math.random() * 255 );
-			var g = Math.floor( Math.random() * 255 );
-			var b = Math.floor( Math.random() * 255 );
-			var col = r * 65536 + g * 256 + b; // BoxGeometry(width, height, depth)
-			var cube = new THREE.Mesh(new THREE.BoxGeometry(2,5,3),new THREE.MeshLambertMaterial({color:col}));
+			// var r = Math.floor( Math.random() * 255 );
+			// var g = Math.floor( Math.random() * 255 );
+			// var b = Math.floor( Math.random() * 255 );
+			// var col = r * 65536 + g * 256 + b; // BoxGeometry(width, height, depth)
+			// var cube = new Physijs.BoxMesh(new THREE.BoxGeometry(2,5,3),new THREE.MeshLambertMaterial({color:col}));
+			var cubeMaterial = Physijs.createMaterial(new THREE.MeshLambertMaterial({ map: texture }), .4, .8 );
+			var cubeGeometry = new THREE.BoxGeometry(2,5,3); // width, height, depth
+			var cube = new Physijs.BoxMesh(cubeGeometry, cubeMaterial, 0);
+			cube.name = "WallCubes";
 			cube.position.x = x;
 			cube.position.z = z;
 			scene.add( cube );
