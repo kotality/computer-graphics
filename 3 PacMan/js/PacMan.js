@@ -10,6 +10,28 @@ var ca = 100, ar = 2;
 Physijs.scripts.worker = 'libs/physijs_worker.js';
 Physijs.scripts.ammo = 'ammo.js';
 
+/*
+#####################################
+#				  ##			    #
+#  ###  ########  ##  ########  ##  #
+#  ###  ########  ##  ########  ##  #
+#									#
+#  #####  ##  #########  ##  #####  #
+#  #####  ##  #########  ##  #####  #
+#         ##      ##     ##         #
+######  ########  ##  #####  ########
+######  ########      #####  ########
+#		                            #
+######  ###  ####   ####  ###  ###  #
+######  ###  ##       ##  ###  ###  #
+##      ###  ###########  ###  ###  #
+##  ##      				   ######
+#   ##  ###  ###########  ###
+###########
+
+####################################
+*/
+
 function init()
 {
 	scene = new Physijs.Scene();
@@ -73,7 +95,7 @@ function setupCameras()
 	camera = new THREE.PerspectiveCamera(45,window.innerWidth/window.innerHeight,0.1,1000);
 	// camera.lookAt( scene.position);
 	camera.position.z = 0;
-	camera.position.y = 100;
+	camera.position.y = 110;
 	camera.rotation.x = 4.7;
 
 	// HUD
@@ -251,19 +273,34 @@ function setBrightness( value )
 
 function addWalls()
 {
-	// Outer Walls
+	/*-------------------------OUTER WALLS------------------------------------*/
 	var wallTexture = THREE.ImageUtils.loadTexture('images/water.jpg');
-
-	var outWallMaterial = Physijs.createMaterial(new THREE.MeshLambertMaterial({ map: wallTexture }), .95, .95);// .4, .8);
-	var outWallGeometry = new THREE.BoxGeometry(3, 5, 70); // width, height, depth
+	var outWallMaterial = Physijs.createMaterial(new THREE.MeshBasicMaterial({ map: wallTexture }), .95, .95);// .4, .8);
+	var outWallGeometry = new THREE.BoxGeometry(3, 5, 80); // width, height, depth
+	var outWallGeometry2 = new THREE.BoxGeometry(76, 5, 3);
+	
+	// Right
 	var outWall = new Physijs.BoxMesh(outWallGeometry, outWallMaterial, 0);
-	outWall.name = "outerWalls";
 	outWall.position.x = 40;
-	// outWall.position.z = 10;
 	scene.add(outWall);
+	// Left
+	var outWall2 = new Physijs.BoxMesh(outWallGeometry, outWallMaterial, 0);
+	outWall2.position.x = -40;
+	scene.add(outWall2);
+	//Top
+	var outWall3 = new Physijs.BoxMesh(outWallGeometry2, outWallMaterial, 0);
+	outWall3.position.z = 38.5;
+	scene.add(outWall3);
+	//Bottom
+	var outWall4 = new Physijs.BoxMesh(outWallGeometry2, outWallMaterial, 0);
+	outWall4.position.z = -38.5;
+	scene.add(outWall4);
 
-	// Inner Walls
-
+	/*-------------------------INNER WALLS------------------------------------*/
+	var innerGeometry = new THREE.BoxGeometry(10, 5, 3); // width, height, depth
+	var one = new Physijs.BoxMesh(innerGeometry, outWallMaterial, 0);
+	one.position.x = 28;
+	scene.add(one);
 }
 
 function addObjectsToScene()
