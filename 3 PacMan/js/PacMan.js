@@ -3,6 +3,7 @@ var scene;
 var camera, cameraHUD;
 
 var player;
+var groundPlane;
 
 var rw = 200, rh = 150;
 var ca = 100, ar = 2;
@@ -47,12 +48,12 @@ function init()
 	setupPlayer();
 	
 	// addObjectsToScene();
+	groundPlane();
 	addWalls();
-	
-	// Main code here.
+
+	// loadSounds();
 	
 	// Output to the stream
-
 	var container = document.getElementById("MainView");
 	container.appendChild( renderer.domElement );
 
@@ -67,11 +68,11 @@ function init()
 // Ball; Pacman
 function setupPlayer()
 {
-	var texture = THREE.ImageUtils.loadTexture('images/metal3.jpg');
+	var texture = THREE.ImageUtils.loadTexture('images/goldfish.jpg');
 
-	var ballGeometry = new THREE.SphereGeometry( 1 ); // radius of sphere = 3
+	var ballGeometry = new THREE.SphereGeometry( 2.5 ); // radius of sphere = 3
 	// var ballMaterial = new THREE.MeshLambertMaterial({color:'white'});
-	var ballMaterial = new Physijs.createMaterial(new THREE.MeshLambertMaterial({ map: texture }), .95, .95);	
+	var ballMaterial = new Physijs.createMaterial(new THREE.MeshBasicMaterial({ map: texture }), .95, .95);	
 	player = new Physijs.SphereMesh( ballGeometry, ballMaterial );
 	scene.add( player );
 }
@@ -109,11 +110,11 @@ function render()
 	// Player rotate camera left and right
 	if( Key.isDown( Key.A ) )
 	{
-		camera.rotation.y += 0.01;
+		camera.rotation.y += 0.03;
 	}
 	if( Key.isDown( Key.D ) )
 	{
-		camera.rotation.y -= 0.01;
+		camera.rotation.y -= 0.03;
 	}
 
 	// Player move forward and back
@@ -271,13 +272,25 @@ function setBrightness( value )
 	}
 }
 
+function groundPlane()
+{
+	var texture = THREE.ImageUtils.loadTexture('images/sandDark.jpg');
+	var planeMaterial = Physijs.createMaterial(new THREE.MeshBasicMaterial({ map: texture }), .4, .8);
+	var planeGeometry = new THREE.BoxGeometry(80, 5, 80); // width, height, depth
+	groundPlane = new Physijs.BoxMesh(planeGeometry, planeMaterial);
+
+	groundPlane.position.y = -5;
+
+	scene.add(groundPlane);
+}
+
 function addWalls()
 {
 	/*-------------------------OUTER WALLS------------------------------------*/
-	var wallTexture = THREE.ImageUtils.loadTexture('images/water.jpg');
+	var wallTexture = THREE.ImageUtils.loadTexture('images/fishSwimming2.jpg');
 	var outWallMaterial = Physijs.createMaterial(new THREE.MeshBasicMaterial({ map: wallTexture }), .95, .95);// .4, .8);
 	var outWallGeometry = new THREE.BoxGeometry(3, 5, 80); // width, height, depth
-	var outWallGeometry2 = new THREE.BoxGeometry(76, 5, 3);
+	var outWallGeometry2 = new THREE.BoxGeometry(77, 5, 3);
 	
 	// Right
 	var outWall = new Physijs.BoxMesh(outWallGeometry, outWallMaterial, 0);
@@ -296,11 +309,184 @@ function addWalls()
 	outWall4.position.z = -38.5;
 	scene.add(outWall4);
 
-	/*-------------------------INNER WALLS------------------------------------*/
-	var innerGeometry = new THREE.BoxGeometry(10, 5, 3); // width, height, depth
+	/*-------------------------INNER WALLS 1----------------------------------*/
+	// One
+	var innerGeometry = new THREE.BoxGeometry(8, 5, 3); // width, height, depth
 	var one = new Physijs.BoxMesh(innerGeometry, outWallMaterial, 0);
-	one.position.x = 28;
+	one.position.x = -30;
+	one.position.z = -30;
 	scene.add(one);
+
+	// Two
+	var innerGeometry2 = new THREE.BoxGeometry(15, 5, 3); // width, height, depth
+	var two = new Physijs.BoxMesh(innerGeometry2, outWallMaterial, 0);
+	two.position.x = -14;
+	two.position.z = -30;
+	scene.add(two);
+
+	// TwoB
+	var innerGeometry3 = new THREE.BoxGeometry(3, 5, 15); // width, height, depth
+	var twoB = new Physijs.BoxMesh(innerGeometry3, outWallMaterial, 0);
+	twoB.position.x = 0;
+	twoB.position.z = -30;
+	scene.add(twoB);
+
+	// Three
+	var three = new Physijs.BoxMesh(innerGeometry2, outWallMaterial, 0);
+	three.position.x = 14;
+	three.position.z = -30;
+	scene.add(three);
+
+	// Four
+	var four = new Physijs.BoxMesh(innerGeometry, outWallMaterial, 0);
+	four.position.x = 30;
+	four.position.z = -30;
+	scene.add(four);
+
+	/*-------------------------INNER WALLS 2----------------------------------*/
+	// Five
+	var innerGeometry5 = new THREE.BoxGeometry(12, 5, 3); // width, height, depth
+	var five = new Physijs.BoxMesh(innerGeometry5, outWallMaterial, 0);
+	five.position.x = -28;
+	five.position.z = -21;
+	scene.add(five);
+
+	// SixA
+	var innerGeometry6 = new THREE.BoxGeometry(3, 5, 15); // width, height, depth
+	var sixA = new Physijs.BoxMesh(innerGeometry6, outWallMaterial, 0);
+	sixA.position.x = -15;
+	sixA.position.z = -15;
+	scene.add(sixA);
+
+	// SixB
+	var innerGeometry6B = new THREE.BoxGeometry(11, 5, 3); // width, height, depth
+	var sixB = new Physijs.BoxMesh(innerGeometry6B, outWallMaterial, 0);
+	sixB.position.x = -8;
+	sixB.position.z = -16;
+	scene.add(sixB);
+
+	// SevenA
+	var innerGeometry7A = new THREE.BoxGeometry(19, 5, 3); // width, height, depth
+	var sevenA = new Physijs.BoxMesh(innerGeometry7A, outWallMaterial, 0);
+	sevenA.position.x = 4;
+	sevenA.position.z = -9;
+	scene.add(sevenA);
+
+	// SevenB
+
+	// EightA
+	var eightA = new Physijs.BoxMesh(innerGeometry6, outWallMaterial, 0);
+	eightA.position.x = 15;
+	eightA.position.z = -15;
+	scene.add(eightA);
+
+	// EightB
+	var eightB = new Physijs.BoxMesh(innerGeometry6B, outWallMaterial, 0);
+	eightB.position.x = 8;
+	eightB.position.z = -16;
+	scene.add(eightB);
+
+	// Nine
+	var nine = new Physijs.BoxMesh(innerGeometry5, outWallMaterial, 0);
+	nine.position.x = 28;
+	nine.position.z = -21;
+	scene.add(nine);
+
+	// Ten
+	var innerGeometry10 = new THREE.BoxGeometry(17, 5, 8); // width, height, depth
+	var ten = new Physijs.BoxMesh(innerGeometry10, outWallMaterial, 0);
+	ten.position.x = -31;
+	ten.position.z = -10;
+	scene.add(ten);
+
+	// Eleven
+	var eleven = new Physijs.BoxMesh(innerGeometry10, outWallMaterial, 0);
+	eleven.position.x = 31;
+	eleven.position.z = -10;
+	scene.add(eleven);
+
+	/*-------------------------INNER WALLS 3----------------------------------*/
+	// Twelve
+	var innerGeometry12 = new THREE.BoxGeometry(15, 5, 5); // width, height, depth
+	var twelve = new Physijs.BoxMesh(innerGeometry12, outWallMaterial, 0);
+	twelve.position.x = -33;
+	twelve.position.z = 1.5;
+	scene.add(twelve);
+
+	// Thirteen
+	var thirteen = new Physijs.BoxMesh(innerGeometry12, outWallMaterial, 0);
+	thirteen.position.x = 33;
+	thirteen.position.z = 1.5;
+	scene.add(thirteen);
+
+	// Fourteen
+	// FifteenA
+	
+	// FifteenB
+	var innerGeometry15 = new THREE.BoxGeometry(3, 5, 15); // width, height, depth
+	var fifteen = new Physijs.BoxMesh(innerGeometry15, outWallMaterial, 0);
+	fifteen.position.x = -24;
+	fifteen.position.z = 6.5;
+	scene.add(fifteen);
+
+	// SixteenA
+
+	// SixteenB
+	var sixteenB = new Physijs.BoxMesh(innerGeometry15, outWallMaterial, 0);
+	sixteenB.position.x = 24;
+	sixteenB.position.z = 6.5;
+	scene.add(sixteenB);
+
+	// Seventeen
+	// EighteenA
+	// EighteenB
+	// EighteenC
+
+	/*-------------------------INNER WALLS 4----------------------------------*/
+	// NineteenA
+	// NineteenB
+	// TwentyA
+	// TwentyB
+	// TwentyOneA
+	// TwentyOneB
+	// TwentyTwoA
+	// TwentyTwoB
+	// TwentyThreeA
+	// TwentyThreeB
+
+	/*--------------------------GHOST FISH------------------------------------*/
+	// TwentyFourA
+	var innerGeometry24A = new THREE.BoxGeometry(32, 5, 3); // width, height, depth
+	var twentyfourA = new Physijs.BoxMesh(innerGeometry24A, outWallMaterial, 0);
+	twentyfourA.position.x = 0;
+	twentyfourA.position.z = 12;
+	scene.add(twentyfourA);
+
+	// TwentyFourB
+	var innerGeometry24B = new THREE.BoxGeometry(3, 5, 11.5); // width, height, depth
+	var twentyfourB = new Physijs.BoxMesh(innerGeometry24B, outWallMaterial, 0);
+	twentyfourB.position.x = -14.5;
+	twentyfourB.position.z = 4.75;
+	scene.add(twentyfourB);
+
+	// TwentyFourC
+	var twentyfourC = new Physijs.BoxMesh(innerGeometry24B, outWallMaterial, 0);
+	twentyfourC.position.x = 14.5;
+	twentyfourC.position.z = 4.75;
+	scene.add(twentyfourC);
+
+	// TwentyFourD
+	var innerGeometry24D = new THREE.BoxGeometry(9, 5, 3); // width, height, depth
+	var twentyfourD = new Physijs.BoxMesh(innerGeometry24D, outWallMaterial, 0);
+	twentyfourD.position.x = -8.5;
+	twentyfourD.position.z = 0.5;
+	scene.add(twentyfourD);
+
+	// TwentyFourE
+	var twentyfourE = new Physijs.BoxMesh(innerGeometry24D, outWallMaterial, 0);
+	twentyfourE.position.x = 8.5;
+	twentyfourE.position.z = 0.5;
+	scene.add(twentyfourE);
 }
 
 function addObjectsToScene()
@@ -340,6 +526,19 @@ function setupSpotlight(x,z,color,number)
 	spotLight.target.position.set( x,0,z);
 	spotLight.name = "SpotLight"+number;
 	scene.add(spotLight);
+}
+
+var pacmanChomp;//, ghostFish, death;
+function loadSounds() {
+	// Background music
+	var audio = new Audio("sounds/PacmanRemix.mp3");
+	audio.loop = true;
+	audio.play();
+
+	// Foley
+	// pacmanChomp = new Audio("sounds/");
+	// ghostFish = new Audio("sounds/");
+	// death = new Audio("sounds/");
 }
 
 window.onload = init;
