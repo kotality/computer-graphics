@@ -10,6 +10,7 @@
 	<script src="libs/three.js"></script>
 	<script src="libs/keyboard.js"></script>
 	<script src="fonts/helvetiker.js"></script>
+	<script src="libs/physi.js"></script>
 	<link rel="stylesheet" href="css/PacStyles.css">
 
 	<script src="jquery-3.2.1.min.js"></script>
@@ -35,15 +36,19 @@
 		<div id="HUDView"></div>
 	</div>
 	
-	<script src="js/addHUDForPacMan.js"></script>
+	<script src="js/PacMan.js"></script>
 
 	<!-- Instructions -->
 	<button id="buttons">How to Play</button>
 
 	<div id="info" class="dialog">
-		<h3>Controls</h3>
-		<p>W/S to move up and down</p>
+		<h3>Player Controls</h3>
+		<p>W/S to move forward and back</p>
 		<p>A/D to move left and right</p>
+
+		<h3>MiniMap</h3>
+		<p>M/N to zoom in and out </p>
+		<p>V/B to move up and down</p>
 	</div>
 
 	<p id="personal">Kenia Castro</p>
@@ -51,22 +56,3 @@
 </body>
 
 </html>
-
-<!-- <table>
-	<tr>
-		<td>Up</td>
-		<td>W</td>
-	</tr>
-	<tr>
-		<td>Down</td>
-		<td>S</td>
-	</tr>
-	<tr>
-		<td>Left</td>
-		<td>A</td>
-	</tr>
-	<tr>
-		<td>Right</td>
-		<td>D</td>
-	</tr>
-</table> -->

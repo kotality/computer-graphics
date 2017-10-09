@@ -1,0 +1,58 @@
+<!--
+	Kenia Castro
+	CAP 4720 Computer Graphics 
+	Fall 2017 
+	HW #3 - PacMan
+-->
+<html>
+
+<head>
+	<script src="libs/three.js"></script>
+	<script src="libs/keyboard.js"></script>
+	<script src="fonts/helvetiker.js"></script>
+	<script src="libs/physi.js"></script>
+	<link rel="stylesheet" href="css/PacStyles.css">
+
+	<script src="jquery-3.2.1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			$('#info').hide();
+
+			$("button").click(function () {
+				$('#info').toggle();
+			});
+
+			$("button").css("opacity", "0.5");
+			$("p").css("opacity", "0.5");
+		});
+	</script>
+</head>
+
+<body>
+	<div id="Main">
+		<div id="MainView"></div>
+		<div id="HUDView"></div>
+	</div>
+	
+	<script src="js/PacMan.js"></script>
+
+	<!-- Instructions -->
+	<button id="buttons">How to Play</button>
+
+	<div id="info" class="dialog">
+		<h3>Player Controls</h3>
+		<p>W/S to move forward and back</p>
+		<p>A/D to move left and right</p>
+
+		<h3>MiniMap</h3>
+		<p>M/N to zoom in and out </p>
+		<p>V/B to move up and down</p>
+	</div>
+
+	<p id="personal">Kenia Castro</p>
+
+</body>
+
+</html>
