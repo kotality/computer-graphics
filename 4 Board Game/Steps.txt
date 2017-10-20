@@ -1,0 +1,221 @@
+	var pieceList = [null,null,null,null,null,null,null,null,
+			 null,null,null,null,null,null,null,null,
+			 null,null,null,null,null,null,null,null,
+			 null,null,null,null,null,null,null,null];
+
+	var piecesToLoad = ['Rook','Knight','Bishop','King','Queen','Bishop','Knight','Rook'];
+
+-------------------------------------------------------------------------------------------
+
+		// already in code
+		document.body.appendChild( renderer.domElement );
+		
+		loadPieces();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------
+
+	function loadPieces()
+	{
+		for( var i=0; i<8; i++ )
+		{
+			loadPiece('pawn','',i);
+			loadPiece('pawn','w',i+16);
+			loadPiece(piecesToLoad[i],'',i+8);
+			loadPiece(piecesToLoad[i],'w',i+24);
+		}
+		setTimeout(waitForPiecesToLoad, 500);
+	}
+
+
+
+
+
+
+
+
+	var plane;
+
+		addPlane();
+
+	function addPlane()
+	{
+		plane = new THREE.Mesh(new THREE.PlaneGeometry(24*8+48, 24*8+48, 10, 10), new THREE.MeshBasicMaterial({transparent: true, color: 0x0000ff,opacity: 0.0}));
+		plane.position.z = .5;
+		plane.rotation.x = -(Math.PI/2);
+		plane.name = "Plane";
+		scene.add( plane );
+	}
+
+----------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	var mouse = new THREE.Vector2();
+	var selectedobject = null;
+
+		renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
+		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
+		renderer.domElement.addEventListener( 'mouseup', onDocumentMouseUp, false );
+
+	function onDocumentMouseMove( event ) 
+	{
+		mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+		mouse.y = -( event.clientY / window.innerHeight ) * 2 + 1;
+		
+	}
+
+	function onDocumentMouseDown( event ) 
+	{
+		event.preventDefault();
+		
+	}
+
+	function onDocumentMouseUp( event ) 
+	{
+		event.preventDefault();
+		
+	}
+
+-------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	var raycaster = new THREE.Raycaster();
+	var projector = new THREE.Projector();
+
+
+	var x,y,z;
+
+		// mouse down code
+		var vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
+		projector.unprojectVector( vector, camera );
+		raycaster.set( camera.position, vector.sub( camera.position ).normalize() );
+
+		var intersects = raycaster.intersectObjects( scene.children, true );
+		if ( intersects.length > 0 )
+		{
+			for( var i=0; i<intersects.length; i++ )
+			{
+				var obj = intersects[i].object;
+				var name = obj.name;
+				if( name.length == 0 )
+				{
+					var par = obj.parent;
+					name = par.name;
+					if( name == '' )
+					{
+						par = par.parent;
+						name = par.name;
+						obj = par;
+						selectedobject = obj;
+					}
+					else
+					{
+						obj = par;
+						selectedobject = obj;
+					}
+					x = selectedobject.position.x;
+					y = selectedobject.position.y;
+					z = selectedobject.position.z;
+					return;
+				}				
+			}			
+		}		
+
+---------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// mouse up code
+		if( selectedobject != null )
+		{
+			selectedobject.position.x = x;
+			selectedobject.position.y = y;
+			selectedobject.position.z = z;
+			selectedobject = null;
+		}
+
+		// mouse move code
+		if( selectedobject != null )
+		{
+			var vector = new THREE.Vector3( mouse.x, mouse.y, 1 );
+			projector.unprojectVector( vector, camera );
+			raycaster.set( camera.position, vector.sub( camera.position ).normalize() );
+			
+			var intersects = raycaster.intersectObject( plane );
+			selectedobject.position.copy( intersects[0].point );
+		}
+
+
+
+
+
+
+
+
+
+
+
