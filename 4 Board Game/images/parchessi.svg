@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 744.09447 1052.362179" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient id="b">
+   <stop stop-color="#fff" offset="0"/>
+   <stop stop-color="#7f7f7f" offset="1"/>
+  </linearGradient>
+  <radialGradient id="c" cx="320.74" cy="403.28" r="52.856" gradientUnits="userSpaceOnUse" xlink:href="#b" spreadMethod="repeat"/>
+  <radialGradient id="a" cx="320.74" cy="403.28" r="52.856" gradientUnits="userSpaceOnUse" xlink:href="#b"/>
+ </defs>
+ <g transform="translate(-97.901 26.923)">
+  <path d="m174.85 213.81 106.67-0.2177-53.335 53.552-53.335-53.335z" fill="#f00" fill-rule="evenodd"/>
+  <path d="m153.36 128.19h50v21.678h-50z" fill="#f00" fill-rule="evenodd"/>
+  <path d="m203.36 64.275h50v149.55h-50z" fill="#f00" fill-rule="evenodd"/>
+  <path d="m203.36 213.59v-170.25" fill="none" stroke="#000" stroke-width="1.0718"/>
+  <path d="m253.36 42.433v171.32" fill="none" stroke="#000" stroke-width="1.0687"/>
+  <path d="m153.36 192.36h150" fill="none" stroke="#000"/>
+  <path d="m154.22 107.53h148.65" fill="none" stroke="#000" stroke-width="1.3131"/>
+  <path d="m154.22 64.957h148.65" fill="none" stroke="#000" stroke-width="1.3131"/>
+  <path d="m154.22 86.243h148.65" fill="none" stroke="#000" stroke-width="1.3131"/>
+  <path d="m154.22 128.81h148.65" fill="none" stroke="#000" stroke-width="1.3131"/>
+  <path d="m154.22 150.1h148.65" fill="none" stroke="#000" stroke-width="1.3131"/>
+  <path d="m154.22 171.39h148.65" fill="none" stroke="#000" stroke-width="1.3131"/>
+  <path transform="matrix(.86541 0 0 .86541 64.008 2.081)" d="m200 59.967a10 10 0 1 1 -20 0 10 10 0 1 1 20 0z" fill-opacity=".55157" fill-rule="evenodd"/>
+  <path transform="matrix(.86541 0 0 .86541 114.25 87.072)" d="m200 59.967a10 10 0 1 1 -20 0 10 10 0 1 1 20 0z" fill-opacity=".55157" fill-rule="evenodd"/>
+  <path transform="matrix(.86541 0 0 .86541 14.708 87.669)" d="m200 59.967a10 10 0 1 1 -20 0 10 10 0 1 1 20 0z" fill="none" stroke="#000"/>
+  <path d="m153.36 192.36 150 150" fill="none" stroke="#000"/>
+  <path d="m303.36 192.36-150 150" fill="none" stroke="#000"/>
+  <path d="m175.12 213.88h106.55" fill="none" stroke="#000" stroke-linejoin="bevel" stroke-width="1.2082"/>
+  <text transform="scale(-1)" x="-186.30426" y="-138.02046" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-186.30426" y="-138.02046">SALIDA</tspan>
+  </text>
+  <path d="m281.87 320.98-106.67 0.2177 53.335-53.552 53.335 53.335z" fill="#ff0" fill-rule="evenodd"/>
+  <path d="m303.36 406.6h-50v-21.678h50v21.678z" fill="#ff0" fill-rule="evenodd"/>
+  <path d="m253.36 470.52h-50v-149.55h50v149.55z" fill="#ff0" fill-rule="evenodd"/>
+  <path d="m253.36 321.21v170.25" fill="none" stroke="#000" stroke-width="1.0718"/>
+  <path d="m203.36 492.36v-171.32" fill="none" stroke="#000" stroke-width="1.0687"/>
+  <path d="m303.36 342.43h-150" fill="none" stroke="#000"/>
+  <path d="m303.36 427.27h-149.51" fill="none" stroke="#000" stroke-width="1.3169"/>
+  <path d="m303.36 469.84h-149.51" fill="none" stroke="#000" stroke-width="1.3169"/>
+  <path d="m303.36 448.55h-149.51" fill="none" stroke="#000" stroke-width="1.3169"/>
+  <path d="m303.36 405.98h-149.51" fill="none" stroke="#000" stroke-width="1.3169"/>
+  <path d="m302.7 384.55h-148.86" fill="none" stroke="#000" stroke-width="1.1551"/>
+  <path d="m303.36 363.41h-149.51" fill="none" stroke="#000" stroke-width="1.3169"/>
+  <path transform="matrix(-.86541 0 0 -.86541 392.71 532.71)" d="m200 59.967a10 10 0 1 1 -20 0 10 10 0 1 1 20 0z" fill-opacity=".55157" fill-rule="evenodd"/>
+  <path transform="matrix(-.86541 0 0 -.86541 342.47 447.13)" d="m200 59.967a10 10 0 1 1 -20 0 10 10 0 1 1 20 0z" fill-opacity=".55157" fill-rule="evenodd"/>
+  <path transform="matrix(-.86541 0 0 -.86541 442.01 447.13)" d="m200 59.967a10 10 0 1 1 -20 0 10 10 0 1 1 20 0z" fill="none" stroke="#000"/>
+  <path d="m281.6 320.92h-106.55" fill="none" stroke="#000" stroke-linejoin="bevel" stroke-width="1.2082"/>
+  <text x="270.41394" y="396.77499" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="270.41394" y="396.77499">SALIDA</tspan>
+  </text>
+  <path d="m303.36 42.861h150v149.5h-150z" fill="#fff" fill-opacity=".27803" fill-rule="evenodd" stroke="#000" stroke-width=".99834"/>
+  <path d="m3.8591 42.861h150v149.5h-150z" fill="#fff" fill-opacity=".27803" fill-rule="evenodd" stroke="#000" stroke-width=".99834"/>
+  <path transform="matrix(.77695 0 0 .77695 -.14739 -156.98)" d="m184.2 353.1a83.16 83.16 0 1 1 -166.32 0 83.16 83.16 0 1 1 166.32 0z" fill="#f00" fill-rule="evenodd" stroke="#000"/>
+  <path d="m3.9374 42.853h449.42v449.02h-449.42z" fill="none" stroke="#000"/>
+  <path transform="matrix(.77695 0 0 .77695 299.85 -156.98)" d="m184.2 353.1a83.16 83.16 0 1 1 -166.32 0 83.16 83.16 0 1 1 166.32 0z" fill="#00f" fill-rule="evenodd" stroke="#000"/>
+  <path d="m174.74 320.38-0.2177-106.67 53.552 53.335-53.335 53.335z" fill="#008000" fill-rule="evenodd"/>
+  <path transform="rotate(-90)" d="m-341.86 89.12h50v21.678h-50z" fill="#008000" fill-rule="evenodd"/>
+  <path transform="rotate(-90)" d="m-291.86 25.2h50v149.55h-50z" fill="#008000" fill-rule="evenodd"/>
+  <path d="m174.52 291.86h-170.25" fill="none" stroke="#000" stroke-width="1.0718"/>
+  <path d="m3.3591 241.86h171.32" fill="none" stroke="#000" stroke-width="1.0687"/>
+  <path d="m153.88 341.86v-150" fill="none" stroke="#000"/>
+  <path d="m68.454 342.36v-150.01" fill="none" stroke="#000" stroke-width="1.3191"/>
+  <path d="m25.883 342.36v-150.01" fill="none" stroke="#000" stroke-width="1.3191"/>
+  <path d="m47.169 342.36v-150.01" fill="none" stroke="#000" stroke-width="1.3191"/>
+  <path d="m89.74 342.36v-150.01" fill="none" stroke="#000" stroke-width="1.3191"/>
+  <path d="m111.03 342.36v-150.01" fill="none" stroke="#000" stroke-width="1.3191"/>
+  <path d="m132.31 342.36v-150.01" fill="none" stroke="#000" stroke-width="1.3191"/>
+  <path transform="matrix(0 -.86541 .86541 0 -36.993 431.21)" d="m200 59.967a10 10 0 1 1 -20 0 10 10 0 1 1 20 0z" fill-opacity=".55157" fill-rule="evenodd"/>
+  <path transform="matrix(0 -.86541 .86541 0 48.297 380.97)" d="m200 59.967a10 10 0 1 1 -20 0 10 10 0 1 1 20 0z" fill-opacity=".55157" fill-rule="evenodd"/>
+  <path transform="matrix(0 -.86541 .86541 0 48.595 480.51)" d="m200 59.967a10 10 0 1 1 -20 0 10 10 0 1 1 20 0z" fill="none" stroke="#000"/>
+  <path d="m174.8 320.1v-106.55" fill="none" stroke="#000" stroke-linejoin="bevel" stroke-width="1.2082"/>
+  <text transform="rotate(90)" x="308.91705" y="-98.9463" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="308.91705" y="-98.9463">SALIDA</tspan>
+  </text>
+  <path d="m3.8591 342.56h150v149.5h-150z" fill="#fff" fill-opacity=".27803" fill-rule="evenodd" stroke="#000" stroke-width=".99834"/>
+  <path transform="matrix(.77695 0 0 .77695 -.14739 143.02)" d="m184.2 353.1a83.16 83.16 0 1 1 -166.32 0 83.16 83.16 0 1 1 166.32 0z" fill="#008000" fill-rule="evenodd" stroke="#000"/>
+  <path d="m303.46 342.86h150v149.01h-150z" fill="#fff" fill-opacity=".27803" fill-rule="evenodd" stroke="#000" stroke-width=".99668"/>
+  <path d="m441.97 417.36c0 35.666-28.946 64.611-64.611 64.611s-64.611-28.946-64.611-64.611 28.946-64.611 64.611-64.611 64.611 28.946 64.611 64.611z" fill="#ff0" fill-rule="evenodd" stroke="#000" stroke-width=".77695"/>
+  <path d="m281.98 213.85 0.2177 106.67-53.552-53.335 53.335-53.335z" fill="#00f" fill-rule="evenodd"/>
+  <path d="m367 192.36v50h-21.678v-50h21.678z" fill="#00f" fill-rule="evenodd"/>
+  <path d="m431.52 242.36v50h-149.55v-50h149.55z" fill="#00f" fill-rule="evenodd"/>
+  <path d="m282.21 242.36h171.15" fill="none" stroke="#000" stroke-width="1.0746"/>
+  <path d="m453.36 292.36h-171.32" fill="none" stroke="#000" stroke-width="1.0687"/>
+  <path d="m303.43 192.36v150" fill="none" stroke="#000"/>
+  <path d="m388.26 193.23v149.13" fill="none" stroke="#000" stroke-width="1.3152"/>
+  <path d="m430.84 192.36v150" fill="none" stroke="#000" stroke-width="1.319"/>
+  <path d="m409.55 192.36v150" fill="none" stroke="#000" stroke-width="1.319"/>
+  <path d="m366.98 193.02v149.34" fill="none" stroke="#000" stroke-width="1.3161"/>
+  <path d="m345.69 192.36v150" fill="none" stroke="#000" stroke-width="1.319"/>
+  <path d="m324.41 192.36v150" fill="none" stroke="#000" stroke-width="1.319"/>
+  <path transform="matrix(0 .86541 -.86541 0 493.71 103.01)" d="m200 59.967a10 10 0 1 1 -20 0 10 10 0 1 1 20 0z" fill-opacity=".55157" fill-rule="evenodd"/>
+  <path transform="matrix(0 .86541 -.86541 0 408.12 153.25)" d="m200 59.967a10 10 0 1 1 -20 0 10 10 0 1 1 20 0z" fill-opacity=".55157" fill-rule="evenodd"/>
+  <path transform="matrix(0 .86541 -.86541 0 407.53 53.711)" d="m200 59.967a10 10 0 1 1 -20 0 10 10 0 1 1 20 0z" fill="none" stroke="#000"/>
+  <path d="m281.91 214.13v106.55" fill="none" stroke="#000" stroke-linejoin="bevel" stroke-width="1.2082"/>
+  <text transform="rotate(-90)" x="-225.30736" y="357.17496" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-225.30736" y="357.17496">SALIDA</tspan>
+  </text>
+  <text x="254.96873" y="475.7334" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="254.96873" y="475.7334" font-family="Arial" font-size="6" font-weight="bold">1</tspan>
+  </text>
+  <text x="254.96873" y="454.5426" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="254.96873" y="454.5426" font-family="Arial" font-size="6" font-weight="bold">2</tspan>
+  </text>
+  <text x="254.96873" y="433.65027" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="254.96873" y="433.65027" font-family="Arial" font-size="6" font-weight="bold">3</tspan>
+  </text>
+  <text x="254.96873" y="412.28021" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="254.96873" y="412.28021" font-family="Arial" font-size="6" font-weight="bold">4</tspan>
+  </text>
+  <text x="254.96873" y="390.49249" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="254.96873" y="390.49249" font-family="Arial" font-size="6" font-weight="bold">5</tspan>
+  </text>
+  <text x="254.96873" y="369.77637" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="254.96873" y="369.77637" font-family="Arial" font-size="6" font-weight="bold">6</tspan>
+  </text>
+  <text x="254.96873" y="348.70477" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="254.96873" y="348.70477" font-family="Arial" font-size="6" font-weight="bold">7</tspan>
+  </text>
+  <text x="254.96873" y="327.21552" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="254.96873" y="327.21552" font-family="Arial" font-size="6" font-weight="bold">8</tspan>
+  </text>
+  <text transform="rotate(-90)" x="-300.92908" y="436.90561" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-300.92908" y="436.90561" font-family="Arial" font-size="6" font-weight="bold">16</tspan>
+  </text>
+  <text transform="rotate(-90)" x="-300.92908" y="415.71481" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-300.92908" y="415.71481" font-family="Arial" font-size="6" font-weight="bold">15</tspan>
+  </text>
+  <text transform="rotate(-90)" x="-300.92908" y="394.52402" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-300.92908" y="394.52402" font-family="Arial" font-size="6" font-weight="bold">14</tspan>
+  </text>
+  <text transform="rotate(-90)" x="-300.92908" y="373.03476" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-300.92908" y="373.03476" font-family="Arial" font-size="6" font-weight="bold">13</tspan>
+  </text>
+  <text transform="rotate(-90)" x="-300.92908" y="351.84396" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-300.92908" y="351.84396" font-family="Arial" font-size="6" font-weight="bold">12</tspan>
+  </text>
+  <text transform="rotate(-90)" x="-300.92908" y="330.94858" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-300.92908" y="330.94858" font-family="Arial" font-size="6" font-weight="bold">11</tspan>
+  </text>
+  <text transform="rotate(-90)" x="-300.92908" y="309.45932" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-300.92908" y="309.45932" font-family="Arial" font-size="6" font-weight="bold">10</tspan>
+  </text>
+  <text transform="rotate(-90)" x="-300.92908" y="288.32813" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-300.92908" y="288.32813" font-family="Arial" font-size="6" font-weight="bold">9</tspan>
+  </text>
+  <text transform="rotate(-90)" x="-240.34126" y="436.90561" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-240.34126" y="436.90561" font-family="Arial" font-size="6" font-weight="bold">18</tspan>
+  </text>
+  <text transform="rotate(-90)" x="-240.34126" y="415.71481" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-240.34126" y="415.71481" font-family="Arial" font-size="6" font-weight="bold">19</tspan>
+  </text>
+  <text transform="rotate(-90)" x="-240.34126" y="394.52402" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-240.34126" y="394.52402" font-family="Arial" font-size="6" font-weight="bold">20</tspan>
+  </text>
+  <text transform="rotate(-90)" x="-240.34126" y="373.108" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-240.34126" y="373.108" font-family="Arial" font-size="6" font-weight="bold">21</tspan>
+  </text>
+  <text transform="rotate(-90)" x="-240.34126" y="351.84396" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-240.34126" y="351.84396" font-family="Arial" font-size="6" font-weight="bold">22</tspan>
+  </text>
+  <text transform="rotate(-90)" x="-240.34126" y="330.94858" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-240.34126" y="330.94858" font-family="Arial" font-size="6" font-weight="bold">23</tspan>
+  </text>
+  <text transform="rotate(-90)" x="-240.34126" y="309.45932" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-240.34126" y="309.45932" font-family="Arial" font-size="6" font-weight="bold">24</tspan>
+  </text>
+  <text transform="rotate(-90)" x="-240.34126" y="288.02966" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-240.34126" y="288.02966" font-family="Arial" font-size="6" font-weight="bold">25</tspan>
+  </text>
+  <text transform="rotate(-90)" x="-289.92606" y="436.95682" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-289.92606" y="436.95682" font-family="Arial" font-size="6" font-weight="bold">17</tspan>
+  </text>
+  <text transform="matrix(-1 0 0 -1 43.359 0)" x="-218.64006" y="-58.10089" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-218.64006" y="-58.10089" font-family="Arial" font-size="6" font-weight="bold">33</tspan>
+  </text>
+  <text transform="matrix(-1 0 0 -1 43.359 0)" x="-218.64006" y="-79.29169" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-218.64006" y="-79.29169" font-family="Arial" font-size="6" font-weight="bold">32</tspan>
+  </text>
+  <text transform="matrix(-1 0 0 -1 43.359 0)" x="-218.64006" y="-100.48248" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-218.64006" y="-100.48248" font-family="Arial" font-size="6" font-weight="bold">31</tspan>
+  </text>
+  <text transform="matrix(-1 0 0 -1 43.359 0)" x="-218.64006" y="-121.97175" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-218.64006" y="-121.97175" font-family="Arial" font-size="6" font-weight="bold">30</tspan>
+  </text>
+  <text transform="matrix(-1 0 0 -1 43.359 0)" x="-218.64006" y="-143.16254" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-218.64006" y="-143.16254" font-family="Arial" font-size="6" font-weight="bold">29</tspan>
+  </text>
+  <text transform="matrix(-1 0 0 -1 43.359 0)" x="-218.64006" y="-164.05792" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-218.64006" y="-164.05792" font-family="Arial" font-size="6" font-weight="bold">28</tspan>
+  </text>
+  <text transform="matrix(-1 0 0 -1 43.359 0)" x="-218.64006" y="-185.54718" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-218.64006" y="-185.54718" font-family="Arial" font-size="6" font-weight="bold">27</tspan>
+  </text>
+  <text transform="matrix(-1 0 0 -1 43.359 0)" x="-218.64006" y="-206.67838" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-218.64006" y="-206.67838" font-family="Arial" font-size="6" font-weight="bold">26</tspan>
+  </text>
+  <text transform="matrix(-1 0 0 -1 43.359 0)" x="-158.05226" y="-58.10089" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-158.05226" y="-58.10089" font-family="Arial" font-size="6" font-weight="bold">35</tspan>
+  </text>
+  <text transform="matrix(-1 0 0 -1 43.359 0)" x="-158.05226" y="-79.29169" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-158.05226" y="-79.29169" font-family="Arial" font-size="6" font-weight="bold">36</tspan>
+  </text>
+  <text transform="matrix(-1 0 0 -1 43.359 0)" x="-158.05226" y="-100.48248" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-158.05226" y="-100.48248" font-family="Arial" font-size="6" font-weight="bold">37</tspan>
+  </text>
+  <text transform="matrix(-1 0 0 -1 43.359 0)" x="-158.05226" y="-121.89851" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-158.05226" y="-121.89851" font-family="Arial" font-size="6" font-weight="bold">38</tspan>
+  </text>
+  <text transform="matrix(-1 0 0 -1 43.359 0)" x="-158.05226" y="-143.16254" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-158.05226" y="-143.16254" font-family="Arial" font-size="6" font-weight="bold">39</tspan>
+  </text>
+  <text transform="matrix(-1 0 0 -1 43.359 0)" x="-158.05226" y="-164.05792" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-158.05226" y="-164.05792" font-family="Arial" font-size="6" font-weight="bold">40</tspan>
+  </text>
+  <text transform="matrix(-1 0 0 -1 43.359 0)" x="-158.05226" y="-185.54718" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-158.05226" y="-185.54718" font-family="Arial" font-size="6" font-weight="bold">41</tspan>
+  </text>
+  <text transform="matrix(-1 0 0 -1 43.359 0)" x="-158.05226" y="-206.97684" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-158.05226" y="-206.97684" font-family="Arial" font-size="6" font-weight="bold">42</tspan>
+  </text>
+  <text transform="matrix(-1 0 0 -1 43.359 0)" x="-207.63704" y="-58.04968" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-207.63704" y="-58.04968" font-family="Arial" font-size="6" font-weight="bold">34</tspan>
+  </text>
+  <text transform="matrix(0 1 -1 0 -38.667 451.89)" x="-218.64006" y="-58.10089" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-218.64006" y="-58.10089" font-family="Arial" font-size="6" font-weight="bold">50</tspan>
+  </text>
+  <text transform="matrix(0 1 -1 0 -38.667 451.89)" x="-218.64006" y="-79.29169" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-218.64006" y="-79.29169" font-family="Arial" font-size="6" font-weight="bold">49</tspan>
+  </text>
+  <text transform="matrix(0 1 -1 0 -38.667 451.89)" x="-218.64006" y="-100.48248" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-218.64006" y="-100.48248" font-family="Arial" font-size="6" font-weight="bold">48</tspan>
+  </text>
+  <text transform="matrix(0 1 -1 0 -38.667 451.89)" x="-218.64006" y="-121.97175" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-218.64006" y="-121.97175" font-family="Arial" font-size="6" font-weight="bold">47</tspan>
+  </text>
+  <text transform="matrix(0 1 -1 0 -38.667 451.89)" x="-218.64006" y="-143.16254" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-218.64006" y="-143.16254" font-family="Arial" font-size="6" font-weight="bold">46</tspan>
+  </text>
+  <text transform="matrix(0 1 -1 0 -38.667 451.89)" x="-218.64006" y="-164.05792" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-218.64006" y="-164.05792" font-family="Arial" font-size="6" font-weight="bold">45</tspan>
+  </text>
+  <text transform="matrix(0 1 -1 0 -38.667 451.89)" x="-218.64006" y="-185.54718" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-218.64006" y="-185.54718" font-family="Arial" font-size="6" font-weight="bold">44</tspan>
+  </text>
+  <text transform="matrix(0 1 -1 0 -38.667 451.89)" x="-218.64006" y="-206.67838" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-218.64006" y="-206.67838" font-family="Arial" font-size="6" font-weight="bold">43</tspan>
+  </text>
+  <text transform="matrix(0 1 -1 0 -38.667 451.89)" x="-158.05226" y="-58.10089" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-158.05226" y="-58.10089" font-family="Arial" font-size="6" font-weight="bold">52</tspan>
+  </text>
+  <text transform="matrix(0 1 -1 0 -38.667 451.89)" x="-158.05226" y="-79.29169" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-158.05226" y="-79.29169" font-family="Arial" font-size="6" font-weight="bold">53</tspan>
+  </text>
+  <text transform="matrix(0 1 -1 0 -38.667 451.89)" x="-158.05226" y="-100.48248" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-158.05226" y="-100.48248" font-family="Arial" font-size="6" font-weight="bold">54</tspan>
+  </text>
+  <text transform="matrix(0 1 -1 0 -38.667 451.89)" x="-158.05226" y="-121.89851" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-158.05226" y="-121.89851" font-family="Arial" font-size="6" font-weight="bold">55</tspan>
+  </text>
+  <text transform="matrix(0 1 -1 0 -38.667 451.89)" x="-158.05226" y="-143.16254" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-158.05226" y="-143.16254" font-family="Arial" font-size="6" font-weight="bold">56</tspan>
+  </text>
+  <text transform="matrix(0 1 -1 0 -38.667 451.89)" x="-158.05226" y="-164.05792" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-158.05226" y="-164.05792" font-family="Arial" font-size="6" font-weight="bold">57</tspan>
+  </text>
+  <text transform="matrix(0 1 -1 0 -38.667 451.89)" x="-158.05226" y="-185.54718" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-158.05226" y="-185.54718" font-family="Arial" font-size="6" font-weight="bold">58</tspan>
+  </text>
+  <text transform="matrix(0 1 -1 0 -38.667 451.89)" x="-158.05226" y="-206.97684" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-158.05226" y="-206.97684" font-family="Arial" font-size="6" font-weight="bold">59</tspan>
+  </text>
+  <text transform="matrix(0 1 -1 0 -38.667 451.89)" x="-207.63704" y="-58.04968" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="-207.63704" y="-58.04968" font-family="Arial" font-size="6" font-weight="bold">51</tspan>
+  </text>
+  <text x="194.90746" y="475.7334" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="194.90746" y="475.7334" font-family="Arial" font-size="6" font-weight="bold">67</tspan>
+  </text>
+  <text x="194.90746" y="454.5426" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="194.90746" y="454.5426" font-family="Arial" font-size="6" font-weight="bold">66</tspan>
+  </text>
+  <text x="194.90746" y="433.65027" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="194.90746" y="433.65027" font-family="Arial" font-size="6" font-weight="bold">65</tspan>
+  </text>
+  <text x="194.90746" y="412.28021" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="194.90746" y="412.28021" font-family="Arial" font-size="6" font-weight="bold">64</tspan>
+  </text>
+  <text x="194.90746" y="390.49249" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="194.90746" y="390.49249" font-family="Arial" font-size="6" font-weight="bold">63</tspan>
+  </text>
+  <text x="194.90746" y="369.77637" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="194.90746" y="369.77637" font-family="Arial" font-size="6" font-weight="bold">62</tspan>
+  </text>
+  <text x="194.90746" y="348.70477" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="194.90746" y="348.70477" font-family="Arial" font-size="6" font-weight="bold">61</tspan>
+  </text>
+  <text x="194.90746" y="327.21552" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="194.90746" y="327.21552" font-family="Arial" font-size="6" font-weight="bold">60</tspan>
+  </text>
+  <text x="205.22473" y="475.7334" font-family="Bitstream Vera Sans" font-size="4">
+   <tspan x="205.22473" y="475.7334" font-family="Arial" font-size="6" font-weight="bold">68</tspan>
+  </text>
+  <path transform="matrix(.68702 .72664 -.72664 .68702 449.79 -94.08)" d="m360 440-22.349-11.17 0.94552 24.967-14.598-20.277-10.766 22.547-3.5029-24.739-20.011 14.961 8.3949-23.533-24.671 3.9481 18.37-16.936-23.68-7.9695 24.136-6.4593-17.264-18.061 24.373 5.4972-6.8932-24.016 19.027 16.194 5.057-24.468 9.3214 23.181 15.849-19.315-2.5192 24.858 23.01-9.7376-13.783 20.84 24.899 2.0709-21.889 12.048 21.085 13.405-24.98 0.49546 12.44 21.668z" fill="url(#c)" fill-rule="evenodd" stroke="#000" stroke-linejoin="bevel" stroke-width=".5"/>
+  <path transform="matrix(.3801 .92495 -.92495 .3801 628.68 -333.22)" d="m360 440-22.349-11.17 0.94552 24.967-14.598-20.277-10.766 22.547-3.5029-24.739-20.011 14.961 8.3949-23.533-24.671 3.9481 18.37-16.936-23.68-7.9695 24.136-6.4593-17.264-18.061 24.373 5.4972-6.8932-24.016 19.027 16.194 5.057-24.468 9.3214 23.181 15.849-19.315-2.5192 24.858 23.01-9.7376-13.783 20.84 24.899 2.0709-21.889 12.048 21.085 13.405-24.98 0.49546 12.44 21.668z" fill="url(#a)" fill-rule="evenodd" stroke="#000" stroke-linejoin="bevel" stroke-width=".5"/>
+  <path transform="matrix(-.68702 .72664 .72664 .68702 5.9288 -94.08)" d="m360 440-22.349-11.17 0.94552 24.967-14.598-20.277-10.766 22.547-3.5029-24.739-20.011 14.961 8.3949-23.533-24.671 3.9481 18.37-16.936-23.68-7.9695 24.136-6.4593-17.264-18.061 24.373 5.4972-6.8932-24.016 19.027 16.194 5.057-24.468 9.3214 23.181 15.849-19.315-2.5192 24.858 23.01-9.7376-13.783 20.84 24.899 2.0709-21.889 12.048 21.085 13.405-24.98 0.49546 12.44 21.668z" fill="url(#a)" fill-rule="evenodd" stroke="#000" stroke-linejoin="bevel" stroke-width=".5"/>
+  <path transform="matrix(-.3801 .92495 .92495 .3801 -171.96 -333.22)" d="m360 440-22.349-11.17 0.94552 24.967-14.598-20.277-10.766 22.547-3.5029-24.739-20.011 14.961 8.3949-23.533-24.671 3.9481 18.37-16.936-23.68-7.9695 24.136-6.4593-17.264-18.061 24.373 5.4972-6.8932-24.016 19.027 16.194 5.057-24.468 9.3214 23.181 15.849-19.315-2.5192 24.858 23.01-9.7376-13.783 20.84 24.899 2.0709-21.889 12.048 21.085 13.405-24.98 0.49546 12.44 21.668z" fill="url(#a)" fill-rule="evenodd" stroke="#000" stroke-linejoin="bevel" stroke-width=".5"/>
+ </g>
+</svg>
