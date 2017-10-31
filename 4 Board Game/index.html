@@ -1,15 +1,70 @@
+<!--
+	Kenia Castro
+	CAP 4720 Computer Graphics 
+	Fall 2017 
+	HW #4 - Board game - LIFE
+-->
 <html>
 
 <head>
-<script src="libs/three.js"></script>
-<script src="libs/keyboard.js"></script>
-<script src="loaders/OBJLoader.js"></script>
-<script src="loaders/MTLLoader.js"></script>
-<script src="loaders/OBJMTLLoader.js"></script>
+    <script src="libs/three.js"></script>
+    <script src="libs/keyboard.js"></script>
+    <script src="libs/physi.js"></script>
+    <script src="libs/OrbitControls.js"></script>
+    <script src='fonts/helvetiker.js'></script>
+
+    <script src="loaders/OBJLoader.js"></script>
+    <script src="loaders/MTLLoader.js"></script>
+    <script src="loaders/OBJMTLLoader.js"></script>
+    <script src="loaders/DDSLoader.js"></script>
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#info').hide();
+
+            $("button").click(function () {
+                $('#info').toggle();
+            });
+
+            $("button").css("opacity", "0.5");
+            $("p").css("opacity", "0.5");
+        });
+    </script>
 </head>
 
-<body>
-<script src="js/loadPiecesDemo.js"></script>
+<body>    
+
+    <script src="js/boardgame.js"></script>
+
+    <div id="Main">
+        <div id="MainView"></div>
+    </div>
+
+    <!-- Instructions -->
+    <button id="buttons">How to Play</button>
+
+    <div id="info" class="dialog">
+        <h3>Player Information</h3>
+        <p>This is a one player game. You are the RED pieces.</p>
+        <p>
+            Regular movement is one space diagonally forward. You can not move a 
+            checker backwards until it becomes a King.
+        </p>
+        <p>If a jump is available, you must take the jump.</p>
+        <h3>Basic Movement</h3>
+        <p>
+            Push WASD to see the checkers move.
+            Click on the checker you want, click on the
+            tile you want to move to.
+        </p>        
+    </div>
+
+    <p id="personal">Kenia Castro</p>
 
 </body>
 
