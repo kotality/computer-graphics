@@ -14,45 +14,36 @@
     <link rel="stylesheet" href="css/styles.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/88/three.min.js"></script> -->
 
-    <script>
-        $(document).ready(function () {
-            $('#info').hide();
-
-            $("button").click(function () {
-                $('#info').toggle();
-            });
-
-            $("button").css("opacity", "0.5");
-            $("p").css("opacity", "0.5");
-        });
-    </script>
 </head>
 
 <body>
+    <!-- Shaders -->   
+    <script type="text/x-glsl" id="vertexShader">
+    varying vec2 uVu;
+    void main()
+    {
+        uVu = uv;
+    
+        gl_Position = projectionMatrix *
+            modelViewMatrix *
+            vec4(position,1.0);
+    }
+    </script>
+    
+    <script type="text/x-glsl" id="fragmentShader">
+    varying vec2 uVu;
+    void main()
+    {
+        float red = uVu.x;
+        float green = uVu.y;
+        float blue = (uVu.x+uVu.y)/2.0;
+        gl_FragColor = vec4(red,green,blue,1.0);
+    }
+    </script>
 
     <script src="js/Shaders.js"></script>
-
-    <div id="Main">
-        <div id="MainView"></div>
-    </div>
-
-    <!-- Instructions -->
-    <button id="buttons">How to Play</button>
-
-    <div id="info" class="dialog">
-        <h3>Player Information</h3>
-        <p>This is a one player game. You are the RED pieces.</p>
-        <p>
-            Regular movement is one space diagonally forward. You can not move a checker backwards until it becomes a King.
-        </p>
-        <p>If a jump is available, you must take the jump.</p>
-        <h3>Basic Movement</h3>
-        <p>
-            Push WASD to see the checkers move. Click on the checker you want, click on the tile you want to move to.
-        </p>
-    </div>
-
     <p id="personal">Kenia Castro</p>
 
 </body>

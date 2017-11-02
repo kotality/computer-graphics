@@ -11,35 +11,6 @@
 	Position: Absolute;
 }
 
-#info {
-	position: absolute;
-	top: 5%;
-	left: 35%;
-	text-align: center;
-	z-index: 1;
-	display: block;
-	/* color: #0BE63B; */
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 21px;
-	width: 15em;
-	word-wrap: normal;
-}
-
-#buttons {
-	position: absolute;
-	top: 3%;
-	left: 2%;
-	text-align: left;
-	z-index: 100;
-	display: block;
-	color: #080808;
-	font-family: Arial, Helvetica, sans-serif;
-	text-align: center;
-	font-size: 22px;
-	width: 13em;
-	word-wrap: normal;
-}
-
 #personal {
 	position: absolute;
 	top: 1%;
@@ -54,24 +25,6 @@
 	word-wrap: normal;
 }
 
-.dialog {
-    color: rgb(250, 250, 209);
-    background-color: rgba(59, 21, 26, 0.96);
-    text-align: center;
-    position: absolute;
-    left: 30%;
-    top: 20%;
-    width: 40%;
-    z-index: 1;
-    padding: 1em;
-    cursor: auto;
-}
-		
-td, th { 
-	border: 0px dotted #dddddd; 
-	text-align: left; 
-	padding: 6px;
-}
 		
 html, body { 
 	overflow-x: hidden; 
