@@ -1,6 +1,6 @@
 var camera, scene, renderer, spotlight; 
 var mouse = {x:0, y:0};
-var cube, cubeSimple, cone, sphere;
+var cube, cubeSimple, deca, sphere;
 
 document.onmousemove = getMouseXY;
 
@@ -9,6 +9,7 @@ init();
 function init()
 {
     scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xe5e192);
 
     camera();      
     renderer();
@@ -16,7 +17,7 @@ function init()
 
     // Objects
     cube();
-    coneMotion();
+    decaMotion();
     cubeSimple();
     sphere();
     
@@ -59,78 +60,91 @@ function getMouseXY(e)
     mouse.y = e.pageY;
 }
 
+var time = 0;
 function animate()
 { 
-    requestAnimationFrame(animate); //------------------------------------------
-
-    Rotation();
-
-    renderer.render(scene, camera); //------------------------------------------
-}
-
-function Rotation() 
-{
-    cube.rotation.x += 0.01;
+    requestAnimationFrame(animate); 
+    
+    cube.rotation.x += 0.007;
     cube.rotation.y += 0.01;
-    cube.rotation.z += 0.01;
+    cube.rotation.z += 0.007;
 
-    cubeSimple.rotation.x += 0.01;
+    cubeSimple.rotation.x += 0.007;
     cubeSimple.rotation.y += 0.01;
-    cubeSimple.rotation.z += 0.01;
+    cubeSimple.rotation.z += 0.007;
 
-    // cone.rotation.x += 0.01;
-    cone.rotation.y += 0.01;
-    // cone.rotation.z += 0.01;
+    deca.rotation.y += 0.03;
+    sphere.rotation.x += 0.02;
 
-    sphere.rotation.x += 0.01;
-    // sphere.rotation.y += 0.01;
-    // sphere.rotation.z += 0.01;
+    time += 0.02;
+    deca.material.uniforms.time.value = time;
+
+    renderer.render(scene, camera);
 }
 
 // Simple shader with pattern
 function cube() 
 {
-    var geometry = new THREE.BoxBufferGeometry(1, 1, 1); // width, height, depth
+    var uniforms = {
+        "color1": {
+            type: "c",
+            value: new THREE.Color(0xffffff)
+        },
+        "color2": {
+            type: "c",
+            value: new THREE.Color(0xf55e0c)
+        },
+        "size": {
+            type: "f",
+            value: 2.8,
+        },
+    }
+    
+    var geometry = new THREE.BoxBufferGeometry(1.4, 1.4, 1.4); // width, height, depth
     var material = new THREE.ShaderMaterial(
     {
-        vertexShader: document.getElementById('vertexShader').textContent,
-        fragmentShader: document.getElementById('fragmentShader').textContent
+        uniforms: uniforms,
+        vertexShader: document.getElementById('vertexShaderCube').textContent,
+        fragmentShader: document.getElementById('fragmentShaderCube').textContent
     });
     cube = new THREE.Mesh(geometry, material);
 
-    cube.position.x = -4;
+    cube.position.x = 0;
     cube.position.y = 2;
     scene.add(cube);
 }
 
 // Simple shader with pattern that has motion
-function coneMotion() 
+function decaMotion() 
 {
-    var geometry = new THREE.ConeGeometry(0.8, 1.5);
-    var material = new THREE.ShaderMaterial(
-        {
-            vertexShader: document.getElementById('vertexShader').textContent,
-            fragmentShader: document.getElementById('fragmentShader').textContent
-        });
-    cone = new THREE.Mesh(geometry, material);
+    var timeUniform = { time: { type: 'f', value: 0.0 } };
 
-    cone.position.x = 4;
-    cone.position.y = -2;
-    scene.add(cone);
+    var geometry = new THREE.DodecahedronBufferGeometry(1);//ConeGeometry(0.8, 1.5, 15);
+    var material = new THREE.ShaderMaterial(
+    {
+        uniforms: timeUniform,
+        vertexShader: document.getElementById('vertexShaderDeca').textContent,
+        fragmentShader: document.getElementById('fragmentShaderDeca').textContent
+    });
+    deca = new THREE.Mesh(geometry, material);
+
+    deca.position.x = 4;
+    deca.position.y = -2;
+    scene.add(deca);
 }
 
 // Shader for cube
 function cubeSimple()
 {
-    var geometry = new THREE.BoxGeometry(1, 1, 1);
+    var geometry = new THREE.BoxGeometry(1.4, 1.4, 1.4);
     var material = new THREE.ShaderMaterial(
     {
-        vertexShader: document.getElementById('vertexShader').textContent,
-        fragmentShader: document.getElementById('fragmentShader').textContent
+        vertexShader: document.getElementById('vertexShaderCubeSimple').textContent,
+        fragmentShader: document.getElementById('fragmentShaderCubeSimple').textContent
     });
     cubeSimple = new THREE.Mesh(geometry, material);
 
-    cubeSimple.position.x = -4;
+    cubeSimple.position.x = 0;
     cubeSimple.position.y = -2;
     scene.add(cubeSimple);
 }
@@ -138,11 +152,19 @@ function cubeSimple()
 // Shader for sphere
 function sphere() 
 {
-    var geometry = new THREE.SphereGeometry(1);
+    var uniforms = {
+        color1: { type: "c", value: new THREE.Color(0x258187) },
+        color2: { type: "c", value: new THREE.Color(0x552284) },
+        lines: { type: "f", value: 21 },
+        linewidth: { type: "f", value: 15.0 },
+    }
+
+    var geometry = new THREE.SphereGeometry(0.95, 30, 30);
     var material = new THREE.ShaderMaterial(
     {
-        vertexShader: document.getElementById('vertexShader').textContent,
-        fragmentShader: document.getElementById('fragmentShader').textContent
+        uniforms: uniforms,
+        vertexShader: document.getElementById('vertexShaderSphere').textContent,
+        fragmentShader: document.getElementById('fragmentShaderSphere').textContent
     });
     sphere = new THREE.Mesh(geometry, material);
 

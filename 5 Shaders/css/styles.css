@@ -11,20 +11,33 @@
 	Position: Absolute;
 }
 
-#personal {
+#personal 
+{
 	position: absolute;
 	top: 1%;
 	left: 90%;
 	text-align: left;
 	z-index: 1;
 	display: block;
-	color: rgb(250, 0, 17);
+	color: rgb(196, 30, 30);
 	font-family: Impact, Arial, Helvetica, sans-serif;
 	font-size: 23px;
 	width: 13em;
 	word-wrap: normal;
 }
 
+#one 
+{
+	position: absolute;
+	top: 37%;
+	left: 10%;
+	width: 100%;
+	text-align: left;
+	z-index: 100;
+	display: block;
+	color: rgb(14, 11, 12);
+	display:block;
+}
 		
 html, body { 
 	overflow-x: hidden; 
