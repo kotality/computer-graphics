@@ -67,6 +67,16 @@
         varying vec2 uVu;
         uniform float time;
 
+        vec2 movement(vec2 _st, float _zoom)
+        {
+            _st *= _zoom;
+
+            // Here is where the offset is happening
+            _st.x += step(1., mod(_st.y,2.0)) * time;
+
+            return fract(_st);
+        }
+
         float box( in vec2 _st, in vec2 _size )
         {
             _size = vec2( 0.5 ) - _size * 0.5;
@@ -90,7 +100,8 @@
             vec3 color = vec3( 0.0 );
             
             vec2 translate = vec2( cos( time ), sin( time ) );
-            st += translate * 0.35;
+            
+            st = movement(st,5.0);
             
             color = vec3(st.x,st.y,0.0);
 
