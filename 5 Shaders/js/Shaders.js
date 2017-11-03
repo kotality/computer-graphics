@@ -1,16 +1,11 @@
 var camera, scene, renderer, spotlight; 
-var mouse = {x:0, y:0};
 var cube, cubeSimple, deca, sphere;
-
-document.onmousemove = getMouseXY;
 
 init();
 
 function init()
-{
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xe5e192);
-
+{    
+    scene();
     camera();      
     renderer();
     spotlight();
@@ -22,6 +17,12 @@ function init()
     sphere();
     
     animate();   
+}
+
+function scene()
+{
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xe5e192);
 }
 
 function camera()
@@ -40,7 +41,7 @@ function renderer()
 function spotlight()
 {
     spotLight = new THREE.SpotLight(0xffffff);
-    spotLight.position.set(10,20,20); // x, y, z
+    spotLight.position.set(10,20,20);
 
     spotLight.castShadow = true;
 
@@ -52,12 +53,6 @@ function spotlight()
     spotLight.shadow.camera.fov = 30;
 
     scene.add(spotLight);
-}
-
-function getMouseXY(e) 
-{
-    mouse.x = e.pageX;
-    mouse.y = e.pageY;
 }
 
 var time = 0;
@@ -86,21 +81,12 @@ function animate()
 function cube() 
 {
     var uniforms = {
-        "color1": {
-            type: "c",
-            value: new THREE.Color(0xffffff)
-        },
-        "color2": {
-            type: "c",
-            value: new THREE.Color(0xf55e0c)
-        },
-        "size": {
-            type: "f",
-            value: 2.8,
-        },
+        color1: { type: "c", value: new THREE.Color(0xffffff) },
+        color2: { type: "c", value: new THREE.Color(0xf55e0c) },
+        size: { type: "f", value: 2.8 },
     }
     
-    var geometry = new THREE.BoxBufferGeometry(1.4, 1.4, 1.4); // width, height, depth
+    var geometry = new THREE.BoxBufferGeometry(1.4, 1.4, 1.4); 
     var material = new THREE.ShaderMaterial(
     {
         uniforms: uniforms,
@@ -119,7 +105,7 @@ function decaMotion()
 {
     var timeUniform = { time: { type: 'f', value: 0.0 } };
 
-    var geometry = new THREE.DodecahedronBufferGeometry(1);//ConeGeometry(0.8, 1.5, 15);
+    var geometry = new THREE.DodecahedronBufferGeometry(1);
     var material = new THREE.ShaderMaterial(
     {
         uniforms: timeUniform,
