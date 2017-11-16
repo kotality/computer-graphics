@@ -1,26 +1,21 @@
 var camera, scene, renderer, light, sun;
-var dom, mouse = { x: 0, y: 0 };
-var ground, movingGround, player, movingPlayer, playerHelper;
-// movingGround = rollingGroundSphere
-// player = hero
-// movingPlayer = heroRollingSphere
+var planeOne, planeTwo;
+var mouse = { x: 0, y: 0 };
+var ground, movingGround, player, movingPlayer, playerHelper, earthPivot;
+// movingGround = rollingGroundSphere | player = hero | movingPlayer = heroRollingSphere
 // playerHelper = sphericalHelper
 var rollingSpeed = 0.008;
 var worldRadius = 26, playerRadius = 0.2; // heroRadius
 var pathAngleValues;
-// var playerBaseY = 1.8; // heroBaseY
+var playerBaseY = 1.8; // heroBaseY
 var bounceValue = 0.1;
-var gravity = 0.005;
-var leftLane = -1, rightLane = 1, middleLane = 0, currentLane;
-var clock;
-var jumping;
-var treeReleaseInterval = 0.5, lastTreeReleaseTime = 0;
-var treesInPath, treesPool, maxTrees = 10;
-var particles, particleGeometry, pMaterial, particleCount = 20;
-var explosionPower = 1.06;
-//var stats;
+var clock, gravity = 0.4, jumping = false;
+
 var scoreText, score, hasCollided;
 // var orbitControl;
+
+// Physijs.scripts.worker = 'libs/physijs_worker.js';
+// Physijs.scripts.ammo = 'libs/ammo.js';
 
 init();
 
@@ -32,11 +27,15 @@ function init()
     renderer();
     spotlight();
 
+    var axisHelper = new THREE.AxisHelper(200);
+    scene.add(axisHelper);
+
     // Objects
-    // treesPool();
+    backgroundImage();
     world();
     player();
-    explosion();
+    planeOne();
+    planeTwo();
     // scorePosition();
     
     loadSounds();
@@ -48,8 +47,6 @@ function initialize()
 {
     hasCollided = false;
     score = 0;
-    treesInPath = [];
-    treesPool = [];
 
     clock = new THREE.Clock();
     clock.start();
@@ -60,36 +57,32 @@ function initialize()
 }
 
 function scene() 
-{    
+{
     scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0xf0fff0, 0.13);
-    // scene.background = new THREE.Color(0x003300);
+    // scene = new Physijs.Scene;
+    scene.fog = new THREE.FogExp2(0xffffff, 0.09);
+    scene.background = new THREE.Color('black');
 }
 
 function camera() 
 {
     camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 10.5;
+    camera.position.z = 11;
     camera.position.y = 2.5;
-    // camera.lookAt(scene.position);
-    // camera.position.set(0,45,0);
 }
 
 function renderer() 
 {
     renderer = new THREE.WebGLRenderer({alpha:true});
 
-    renderer.setClearColor('lightblue', 1);
+    // renderer.setClearColor('lightblue', 1);
     renderer.setPixelRatio(window.devicePixelRatio);
     
     renderer.shadowMap.enbled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    // dom = document.getElementById('TutContainer');
-    // dom.appendChild(renderer.domElement);
     document.body.appendChild(renderer.domElement);
-
     window.addEventListener('resize', onWindowResize, false);
     // document.onkeydown = handleKeyDown;
 }
@@ -99,47 +92,57 @@ function spotlight()
     light = new THREE.HemisphereLight(0xfffafa, 0x000000, .9)
     scene.add(light);
 
-    sun = new THREE.DirectionalLight(0xcdc1c5, 0.9);
-    sun.position.set(12, 6, -7);
+    sun = new THREE.DirectionalLight(0xffffff, 0.9);
+    sun.position.set(5, 10, 20);
     sun.castShadow = true;
     scene.add(sun);
 
-    sun.shadow.mapSize.width = 256;
-    sun.shadow.mapSize.height = 256;
-    sun.shadow.camera.near = 0.5;
-    sun.shadow.camera.far = 50;
+    // sun.shadow.mapSize.width = 1024;
+    // sun.shadow.mapSize.height = 1024;
 
-    // light = new THREE.SpotLight(0xffffff, 1.3, 187, 0.85, 0.135, 1.7);
-    // light.position.set(0, 15, 2);
+    // sun.shadow.camera.near = 50;
+    // sun.shadow.camera.far = 100;
+    // sun.shadow.camera.fov = 300;
 
-    // light.castShadow = true;
-
-    // light.shadow = new THREE.LightShadow(new THREE.PerspectiveCamera(50, 1, 200, 10000));
-    // light.shadow.mapSize.width = 1024;
-    // light.shadow.mapSize.height = 1024;
-
-    // light.shadow.camera.near = 500;
-    // light.shadow.camera.far = 900;
-    // light.shadow.camera.fov = 30;
-
-    // var helper = new THREE.CameraHelper(light.shadow.camera);
+    // var helper = new THREE.CameraHelper(sun.shadow.camera);
     // scene.add(helper);
 
-    // var spotLightHelper = new THREE.SpotLightHelper(light);
+    // var spotLightHelper = new THREE.SpotLightHelper(sun);
     // scene.add(spotLightHelper);
 
-    // scene.add(light);
+    // var helper = new THREE.DirectionalLightHelper(sun, 50);
+    // scene.add(helper);
 }
 
 function animate() 
 {
     requestAnimationFrame(animate);
 
-    player.rotation.x += 0.007;
-    player.rotation.y += 0.01;
-    player.rotation.z += 0.007;
-    movingGround.rotateX(0.002);//.rotation.x += 0.002;
-    // cameraControl();
+    player.rotateX(-movingPlayer);
+    // player.rotation.y += 0.01; // player.rotation.z += 0.007;
+    movingGround.rotateX(0.005);
+    // earthPivot.rotateY(0.05); // earthPivot.rotateX(0.01);
+
+    if (player.position.y <= playerBaseY) // <= 1.8
+    {
+        jumping = false;
+        bounceValue = (Math.random() * 0.025) + 0.001;
+    }
+    player.position.y += bounceValue;
+    player.position.x = THREE.Math.lerp(player.position.x, 0, 2 * clock.getDelta());//clock.getElapsedTime());
+    bounceValue -= gravity;
+
+    // while (planeTwo.position.x <= 25)
+    // {        
+    //     if (planeTwo.position.x == -25)
+    //         planeOne.position.x -= 0.5;
+    //     else
+    //         planeTwo.position.x -= 0.5;
+    // }
+    
+    
+    // playerMovement();
+
     controls();
         
     renderer.render(scene, camera);
@@ -150,17 +153,17 @@ function animate()
 // ========================================================================== //
 function controls()
 {
-    // Up and down
+    // Look up and down
     if (Key.isDown(Key.W)) 
-    {
-        camera.position.y -= 0.2;
-    }
-    if (Key.isDown(Key.S)) 
     {
         camera.position.y += 0.2;
     }
+    if (Key.isDown(Key.S)) 
+    {
+        camera.position.y -= 0.2;
+    }
 
-    // Left and right
+    // Look left and right
     if (Key.isDown(Key.A)) 
     {
         camera.position.x -= 0.2;
@@ -170,7 +173,19 @@ function controls()
         camera.position.x += 0.2;
     }
 
-    // Into and out of
+    // Move left and right
+    if (Key.isDown(Key.LEFTARROW)) 
+    {
+        if (player.position.x >= -1.5)
+        { player.position.x -= 0.06; }        
+    }
+    if (Key.isDown(Key.RIGHTARROW)) 
+    {
+        if (player.position.x <= 1.5) 
+        { player.position.x += 0.06; }   
+    }
+
+    // Look into and out of
     if (Key.isDown(Key.O))
     {
         camera.position.z += 0.2;
@@ -180,64 +195,26 @@ function controls()
         camera.position.z -= 0.2;
     }
 
+    // Jump
+    if (!jumping && Key.isDown(Key.SPACE))
+    {
+        player.velocity += 0.02;
+        player.position.y += 0.62;         
+        jumping = true;
+    }
+    if (jumping && !Key.isDown(Key.SPACE))
+    {
+        player.position.y -= 0.62;
+        player.velocity -= 0.02;
+        jumping = false;
+    }
+
     // Orbit controls
-    orbitControl = new THREE.OrbitControls(camera, renderer.domElement);//helper to rotate around in scene
+    // orbitControl = new THREE.OrbitControls(camera, renderer.domElement);//helper to rotate around in scene
     // orbitControl.addEventListener('change', render);
     //orbitControl.enableDamping = true;
     //orbitControl.dampingFactor = 0.8;
-    orbitControl.enableZoom = false;
-}
-
-function cameraControl() 
-{
-    document.addEventListener('mousemove', function (event) {
-        mouse.x = (event.clientX / window.innerWidth) - 0.5;
-        mouse.y = (event.clientY / window.innerHeight) - 0.5;
-    }, false)
-    onRenderFcts.push(function (delta, now) {
-        camera.position.x += (mouse.x * 5 - camera.position.x) * (delta * 3);
-        camera.position.y += (mouse.y * 5 - camera.position.y) * (delta * 3);
-        camera.lookAt(scene.position);
-    })
-}
-
-function handleKeyDown(keyEvent) 
-{
-    if (jumping) return;
-    var validMove = true;
-    if (keyEvent.keyCode === 37) {   //left
-        if (currentLane == middleLane) {
-            currentLane = leftLane;
-        } else if (currentLane == rightLane) {
-            currentLane = middleLane;
-        }
-        else {
-            validMove = false;
-        }
-    }
-    else if (keyEvent.keyCode === 39) {   //right
-        if (currentLane == middleLane) {
-            currentLane = rightLane;
-        }
-        else if (currentLane == leftLane) {
-            currentLane = middleLane;
-        }
-        else {
-            validMove = false;
-        }
-    }
-    else {
-        if (keyEvent.keyCode === 38) {//up, jump
-            bounceValue = 0.1;
-            jumping = true;
-        }
-        validMove = false;
-    }
-    //heroSphere.position.x=currentLane;
-    if (validMove) {
-        jumping = true;
-        bounceValue = 0.06;
-    }
+    // orbitControl.enableZoom = false;
 }
 
 function onWindowResize() 
@@ -253,22 +230,33 @@ function onWindowResize()
 function player() 
 {
     var texture = new THREE.TextureLoader().load("images/feathers.jpg");
+    
     var geometry = new THREE.DodecahedronGeometry(playerRadius, 1);
-    var material = new THREE.MeshStandardMaterial({ shading: THREE.FlatShading, map: texture});
-    
-    jumping = false;
-    
+    var material = new THREE.MeshStandardMaterial({ flatShading: true, map: texture });	
     player = new THREE.Mesh(geometry, material);
+ 
+    player.position.y = 1.5;
+    player.position.z = 8.5; 
+    player.velocity = 0;
 
     player.castShadow = true;
     player.receiveShadow = true;
     scene.add(player);
+}
 
-    player.position.y = 1.8;
-    player.position.z = 8.8;   
+function backgroundImage()
+{
+    var texture = new THREE.TextureLoader().load("images/sky.png");
 
-    currentLane = middleLane;
-    player.position.x = currentLane;
+    var geometry = new THREE.PlaneBufferGeometry(50, 22, 4, 4); // width, height, widthSegments, heightSegments
+    var material = new THREE.MeshStandardMaterial({ map: texture });
+    
+    background = new THREE.Mesh(geometry, material);
+
+    background.position.y = 2;
+    background.rotateX(-.4);
+
+    scene.add(background);
 }
 
 function world()
@@ -276,10 +264,10 @@ function world()
     var texture = new THREE.TextureLoader().load("images/grassTexture5.jpg");
 
     var tiers = 40, sides = 40;
-    var current = 1, lerpValue = 0.5, height, maxHeight = 0.7;
+    var current = 1, lerpValue = 0.5, height, maxHeight = 0.6;
 
-    var geometry = new THREE.SphereGeometry(worldRadius, 40, 40);
-    var material = new THREE.MeshStandardMaterial({ map: texture, color: 0xfffafa, shading: THREE.FlatShading});
+    var geometry = new THREE.SphereGeometry(10, tiers, sides);
+    var material = new THREE.MeshStandardMaterial({ map: texture,  color: 0xfffafa, flatShading: true});
 
     var vertexIndex;
     var vVector = new THREE.Vector3();
@@ -287,7 +275,7 @@ function world()
     var firstVVector = new THREE.Vector3();
     var offset = new THREE.Vector3();
 
-    for (var i = 0; i < tiers - 2; i++)
+    for (var i = 2; i < tiers - 2; i++)
     {
         current = i;
 
@@ -325,142 +313,79 @@ function world()
 
     scene.add(movingGround);
 
-    movingGround.position.y = -24;
-    movingGround.position.z = 2;
+    movingGround.position.y = -7;
+    movingGround.position.z = 2.5;
 
-    // worldTrees();
+    // earthPivot = new THREE.Object3D();
+    // movingGround.add(earthPivot);
+
+    // var one = new THREE.Mesh(geometry, material);
+    // one.scale.set(0.06, 0.06, 0.06);
+    // one.position.x = 10;
+    // earthPivot.add(one);
+
+    // var two = new THREE.Mesh(geometry, material);
+    // two.scale.set(0.04, 0.04, 0.04);
+    // two.position.x = -10;
+    // earthPivot.add(two);
+
+    // var three = new THREE.Mesh(geometry, material);
+    // three.scale.set(0.04, 0.04, 0.04);
+    // three.position.y = 10;
+    // earthPivot.add(three);
+
+    // var four = new THREE.Mesh(geometry, material);
+    // four.scale.set(0.04, 0.04, 0.04);
+    // four.position.y = -10;
+    // earthPivot.add(four);
+
+    // var five = new THREE.Mesh(geometry, material);
+    // five.scale.set(0.04, 0.04, 0.04);
+    // five.position.z = 10;
+    // earthPivot.add(five);
+
+    // var six = new THREE.Mesh(geometry, material);
+    // six.scale.set(0.04, 0.04, 0.04);
+    // six.position.z = 10;
+    // earthPivot.add(six);
+
 }
 
-function scorePosition()
+function planeOne() // Rightside
 {
-    // Displays score -->>> REDO?
-    scoreText = document.createElement('div');
-    scoreText.style.position = 'absoulte';
+    var objectLoader = new THREE.ObjectLoader();
+    objectLoader.load("models/plane/toy-plane.json", function (planeOne) {
+        // player.castShadow = true;
+        // player.receiveShadow = true;
+        planeOne.scale.set(.55,.55,.55);
+        planeOne.position.y = 4.3;
+        planeOne.position.x = -11.2;
+        // planeOne.rotateZ(3);
+        planeOne.rotateY(4.5);        
+        scene.add(planeOne);
 
-    scoreText.style.width = 100;
-    scoreText.style.height = 100;
-
-    scoreText.innerHTML = "0";
-    scoreText.style.top = 50 + 'px';
-    scoreText.style.left = 10 + 'px';
-    document.body.appendChild(scoreText);
-
-    // ---------------------------------------------
-    // Creates instructions ---> DONT NEED
-    //  var infoText = document.createElement('div');
-
-    // infoText.style.position = 'absolute';
-    // infoText.style.width = 100;
-    // infoText.style.height = 100;
-    // infoText.style.backgroundColor = "yellow";
-    // infoText.innerHTML = "UP - Jump, Left/Right - Move";
-    // infoText.style.top = 10 + 'px';
-    // infoText.style.left = 10 + 'px';
-
-    // document.body.appendChild(infoText);
-}
-
-function explosion()
-{
-    particleGeometry = new THREE.Geometry();
-    for (var i = 0; i < particleCount; i++)
-    {
-        var vertex = new THREE.Vector3();
-        particleGeometry.vertices.push(vertex);
-    }
-
-    pMaterial = new THREE.ParticleBasicMaterial({
-        color: 0xfffafa,
-        size: 0.2
+        // while (planeOne.position.x >= -26 && planeOne.position.x <=26)
+        // {        
+        //     if (planeOne.position.x == 25)
+        //         planeOne.position.x -= 0.5;
+        //     else
+        //         planeOne.position.x += 0.5;
+        // }
     });
-
-    particles = new THREE.Points(particleGeometry, pMaterial);
-    particles.visible = false;
-    scene.add(particles);
 }
 
-// ========================================================================== // 
-//                                   Trees                                    //
-// ========================================================================== //
-
-function treesPool()
+function planeTwo() // Leftside
 {
-    var newTree;
-
-    for (var i = 0; i < maxTrees; i++)
-    {
-        newTree = createTree();//!!!!!!!!!!!!!!!!!
-        treesPool.push(newTree);
-    }
-}
-
-function addPathTrees()
-{
-    var options = [0,1,2];
-    var lane = Math.floor(Math.random() * 3);
-
-    addTree(true, lane);
-    options.splice(lane, 1);
-
-    if (Math.random() > 0.5)
-    {
-        lane = Math.floor(Math.random() * 3);
-        addTree(true, options[lane]);
-    }
-}
-
-function addWorldTrees()
-{
-    var numberOfTrees = 36;
-    var spacing = 6.28/36;
-
-    for (var i = 0; i < numberOfTrees; i++)
-    {
-        addTree(false, 8 * spacing, true);
-        addTree(false, i * spacing, false)
-    }
-}
-
-function addTree(choice, row, isLeft)
-{
-    var newTree;
-
-    if (choice)
-    {
-        if (treesPool.length == 0) 
-            return;
-        
-        newTree = treesPool.pop();
-        newTree.visible = true;
-
-        treesInPath.push(newTree);
-        playerHelper.set(worldRadius - 0.3, pathAngleValues[row], -movingGround.rotation.x + 4);
-    }
-    else
-    {
-        var angle = 0;
-        newTree = createTree(); //!!!!!!!!!!!!!
-
-        if (isLeft)
-        {
-            angle = 1.68 + Math.random() * 0.1;
-        }
-        else
-        {
-            angle = 1.46 - Math.random() * 0.1;
-        }
-
-        playerHelper.set(worldRadius - 0.3, angle, row);
-    }
-
-    // newTree.position.setFrom
-    var groundVector = movingGround.position.clone().normalize();
-    var treeVector = newTree.position.clone().normalize();
-
-    newTree.quaternion.setFromUnitVectors(treeVector, groundVector);
-    newTree.rotateX((Math.random()*(2 * Math.PI/10)) + (-Math.PI/10));
-
-    movingGround.add(newTree);
+    var objectLoader = new THREE.ObjectLoader();
+    objectLoader.load("models/plane/toy-plane.json", function (planeTwo) {
+        // player.castShadow = true;
+        // player.receiveShadow = true;
+        planeTwo.scale.set(.55,.55,.55);
+        planeTwo.position.y = 7.3;
+        planeTwo.position.x = 10.2;
+        planeTwo.rotateY(-4.5);
+        scene.add(planeTwo);
+    });
 }
 
 // ========================================================================== // 
@@ -474,16 +399,12 @@ function loadSounds() {
     audio.play();
 
     // Foley
-    // step = new Audio("");
-    // pickUpItem = new Audio("");
-    // dropItem = new Audio("");
 
     // bird1 = new Audio("");
     // bird2 = new Audio("");
     // bird3 = new Audio("");
     // bigBird = new Audio("");
-
-    // bossRoar = new Audio("");
+    // jump = new Audio("");
 
     // one = new Audio("");
     // two = new Audio("");
