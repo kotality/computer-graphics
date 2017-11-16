@@ -1,4 +1,4 @@
-var camera, scene, renderer, light;
+var camera, scene, renderer, light, sun;
 var dom, mouse = { x: 0, y: 0 };
 var ground, movingGround, player, movingPlayer, playerHelper;
 // movingGround = rollingGroundSphere
@@ -33,12 +33,11 @@ function init()
     spotlight();
 
     // Objects
-    player();
     // treesPool();
     world();
-    // scorePosition();
+    player();
     explosion();
-    // ground();
+    // scorePosition();
     
     loadSounds();
 
@@ -50,6 +49,7 @@ function initialize()
     hasCollided = false;
     score = 0;
     treesInPath = [];
+    treesPool = [];
 
     clock = new THREE.Clock();
     clock.start();
@@ -62,7 +62,7 @@ function initialize()
 function scene() 
 {    
     scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0xf0fff0, 0.14);
+    scene.fog = new THREE.FogExp2(0xf0fff0, 0.13);
     // scene.background = new THREE.Color(0x003300);
 }
 
@@ -96,51 +96,39 @@ function renderer()
 
 function spotlight() 
 {
-    // light = new THREE.HemisphereLight(0xfffafa, 0x000000, .9)
-    // scene.add(hemisphereLight);
-    // sun = new THREE.DirectionalLight(0xcdc1c5, 0.9);
-    // sun.position.set(12, 6, -7);
-    // sun.castShadow = true;
-    // scene.add(sun);
+    light = new THREE.HemisphereLight(0xfffafa, 0x000000, .9)
+    scene.add(light);
 
-    // scene.add(new THREE.AmbientLight(0x505050));
+    sun = new THREE.DirectionalLight(0xcdc1c5, 0.9);
+    sun.position.set(12, 6, -7);
+    sun.castShadow = true;
+    scene.add(sun);
 
-    light = new THREE.SpotLight(0xffffff, 1.3, 187, 0.85, 0.135, 1.7);
-    light.position.set(0, 15, 2);
+    sun.shadow.mapSize.width = 256;
+    sun.shadow.mapSize.height = 256;
+    sun.shadow.camera.near = 0.5;
+    sun.shadow.camera.far = 50;
 
-    light.castShadow = true;
+    // light = new THREE.SpotLight(0xffffff, 1.3, 187, 0.85, 0.135, 1.7);
+    // light.position.set(0, 15, 2);
 
-    light.shadow = new THREE.LightShadow(new THREE.PerspectiveCamera(50, 1, 200, 10000));
-    light.shadow.mapSize.width = 1024;
-    light.shadow.mapSize.height = 1024;
+    // light.castShadow = true;
 
-    light.shadow.camera.near = 500;
-    light.shadow.camera.far = 900;
-    light.shadow.camera.fov = 30;
+    // light.shadow = new THREE.LightShadow(new THREE.PerspectiveCamera(50, 1, 200, 10000));
+    // light.shadow.mapSize.width = 1024;
+    // light.shadow.mapSize.height = 1024;
+
+    // light.shadow.camera.near = 500;
+    // light.shadow.camera.far = 900;
+    // light.shadow.camera.fov = 30;
 
     // var helper = new THREE.CameraHelper(light.shadow.camera);
     // scene.add(helper);
 
-    var spotLightHelper = new THREE.SpotLightHelper(light);
-    scene.add(spotLightHelper);
+    // var spotLightHelper = new THREE.SpotLightHelper(light);
+    // scene.add(spotLightHelper);
 
-    scene.add(light);
-
-    // sun = new THREE.DirectionalLight(0xffffff, 0.8);
-    // sun.position.set(0, 4, 1);
-    // sun.castShadow = true;
-    // scene.add(sun);
-
-    // //Set up shadow properties for the sun light
-    // sun.shadow.mapSize.width = 256;
-    // sun.shadow.mapSize.height = 256;
-    // sun.shadow.camera.near = 0.5;
-    // sun.shadow.camera.far = 50;
-
-    //Create a helper for the shadow camera (optional)
-    
-    // var helper = new THREE.CameraHelper(spotLight.shadow.camera);
-    // scene.add(helper);
+    // scene.add(light);
 }
 
 function animate() 
@@ -150,6 +138,7 @@ function animate()
     player.rotation.x += 0.007;
     player.rotation.y += 0.01;
     player.rotation.z += 0.007;
+    movingGround.rotateX(0.002);//.rotation.x += 0.002;
     // cameraControl();
     controls();
         
@@ -212,6 +201,45 @@ function cameraControl()
     })
 }
 
+function handleKeyDown(keyEvent) 
+{
+    if (jumping) return;
+    var validMove = true;
+    if (keyEvent.keyCode === 37) {   //left
+        if (currentLane == middleLane) {
+            currentLane = leftLane;
+        } else if (currentLane == rightLane) {
+            currentLane = middleLane;
+        }
+        else {
+            validMove = false;
+        }
+    }
+    else if (keyEvent.keyCode === 39) {   //right
+        if (currentLane == middleLane) {
+            currentLane = rightLane;
+        }
+        else if (currentLane == leftLane) {
+            currentLane = middleLane;
+        }
+        else {
+            validMove = false;
+        }
+    }
+    else {
+        if (keyEvent.keyCode === 38) {//up, jump
+            bounceValue = 0.1;
+            jumping = true;
+        }
+        validMove = false;
+    }
+    //heroSphere.position.x=currentLane;
+    if (validMove) {
+        jumping = true;
+        bounceValue = 0.06;
+    }
+}
+
 function onWindowResize() 
 {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -243,26 +271,15 @@ function player()
     player.position.x = currentLane;
 }
 
-function ground()
-{
-    var geometry = new THREE.PlaneBufferGeometry(5, 5, 4, 4);
-    var material = new THREE.MeshStandardMaterial({ color: 0x00ff00});//{map: THREE.TextureLoader('images/grassTexture.jpg')});//color: 0x00ff00 });//map: THREE.ImageUtils.loadTexture('images/grassTexture.jpg') });
-    ground = new THREE.Mesh(geometry, material);
-
-    ground.receiveShadow = true;
-    ground.castShadow = false;
-    ground.rotateX(-Math.PI/2);
-
-    scene.add(ground);
-}
-
 function world()
 {
+    var texture = new THREE.TextureLoader().load("images/grassTexture5.jpg");
+
     var tiers = 40, sides = 40;
     var current = 1, lerpValue = 0.5, height, maxHeight = 0.7;
 
     var geometry = new THREE.SphereGeometry(worldRadius, 40, 40);
-    var material = new THREE.MeshStandardMaterial({ color: 0xfffafa, shading: THREE.FlatShading});
+    var material = new THREE.MeshStandardMaterial({ map: texture, color: 0xfffafa, shading: THREE.FlatShading});
 
     var vertexIndex;
     var vVector = new THREE.Vector3();
@@ -305,7 +322,7 @@ function world()
     movingGround = new THREE.Mesh(geometry, material);
     movingGround.receiveShadow = true;
     movingGround.castShadow = false;
-    movingGround.rotateZ(-Math.PI/2);
+
     scene.add(movingGround);
 
     movingGround.position.y = -24;
@@ -362,6 +379,10 @@ function explosion()
     scene.add(particles);
 }
 
+// ========================================================================== // 
+//                                   Trees                                    //
+// ========================================================================== //
+
 function treesPool()
 {
     var newTree;
@@ -373,54 +394,73 @@ function treesPool()
     }
 }
 
-function handleKeyDown(keyEvent)
+function addPathTrees()
 {
-    if (jumping) return;
-    var validMove = true;
-    if (keyEvent.keyCode === 37) 
-    {   //left
-        if (currentLane == middleLane) 
-        {
-            currentLane = leftLane;
-        } else if (currentLane == rightLane) 
-        {
-            currentLane = middleLane;
-        } 
-        else 
-        {
-            validMove = false;
-        }
-    } 
-    else if (keyEvent.keyCode === 39) 
-    {   //right
-        if (currentLane == middleLane)
-        {
-            currentLane = rightLane;
-        } 
-        else if (currentLane == leftLane) 
-        {
-            currentLane = middleLane;
-        } 
-        else 
-        {
-            validMove = false;
-        }
-    } 
-    else 
+    var options = [0,1,2];
+    var lane = Math.floor(Math.random() * 3);
+
+    addTree(true, lane);
+    options.splice(lane, 1);
+
+    if (Math.random() > 0.5)
     {
-        if (keyEvent.keyCode === 38) 
-        {//up, jump
-            bounceValue = 0.1;
-            jumping = true;
-        }
-        validMove = false;
+        lane = Math.floor(Math.random() * 3);
+        addTree(true, options[lane]);
     }
-    //heroSphere.position.x=currentLane;
-    if (validMove) 
+}
+
+function addWorldTrees()
+{
+    var numberOfTrees = 36;
+    var spacing = 6.28/36;
+
+    for (var i = 0; i < numberOfTrees; i++)
     {
-        jumping = true;
-        bounceValue = 0.06;
+        addTree(false, 8 * spacing, true);
+        addTree(false, i * spacing, false)
     }
+}
+
+function addTree(choice, row, isLeft)
+{
+    var newTree;
+
+    if (choice)
+    {
+        if (treesPool.length == 0) 
+            return;
+        
+        newTree = treesPool.pop();
+        newTree.visible = true;
+
+        treesInPath.push(newTree);
+        playerHelper.set(worldRadius - 0.3, pathAngleValues[row], -movingGround.rotation.x + 4);
+    }
+    else
+    {
+        var angle = 0;
+        newTree = createTree(); //!!!!!!!!!!!!!
+
+        if (isLeft)
+        {
+            angle = 1.68 + Math.random() * 0.1;
+        }
+        else
+        {
+            angle = 1.46 - Math.random() * 0.1;
+        }
+
+        playerHelper.set(worldRadius - 0.3, angle, row);
+    }
+
+    // newTree.position.setFrom
+    var groundVector = movingGround.position.clone().normalize();
+    var treeVector = newTree.position.clone().normalize();
+
+    newTree.quaternion.setFromUnitVectors(treeVector, groundVector);
+    newTree.rotateX((Math.random()*(2 * Math.PI/10)) + (-Math.PI/10));
+
+    movingGround.add(newTree);
 }
 
 // ========================================================================== // 
