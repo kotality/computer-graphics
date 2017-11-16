@@ -55,7 +55,7 @@ function scene()
 {
     scene = new THREE.Scene();
     // scene = new Physijs.Scene;
-    scene.fog = new THREE.FogExp2(0xffffff, 0.1);
+    scene.fog = new THREE.FogExp2(0xffffff, 0.11);
     scene.background = new THREE.Color('black');
 }
 
@@ -392,12 +392,12 @@ function world()
     nine1.position.set(-1.7, 10, -6);
     ten1.position.set(-1.7, 10, -6);
 
-    one2.rotateY(-9);
-    two2.rotateY(-9);
-    three2.rotateY(-9);
-    four2.rotateY(-9);
-    five2.rotateY(-9);
-    six2.rotateY(-9);
+    one2.rotateZ(-9);
+    two2.rotateZ(-9);
+    three2.rotateZ(-9);
+    four2.rotateZ(-9);
+    five2.rotateZ(-9);
+    six2.rotateZ(-9);
     seven2.rotateZ(-9);
     eight2.rotateZ(-9);
     nine2.rotateZ(-9);
